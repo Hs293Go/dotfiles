@@ -113,10 +113,6 @@ unset __conda_setup
 
 source $HOME/catkin_ws/devel/setup.zsh
 
-if [ ! -z ${VCPKG_ROOT+x} ] ; then
-    source $VCPKG_ROOT/scripts/vcpkg_completion.zsh
-fi
-
 if [ ! -z ${PX4_ROOT+x} ] ; then
     typeset -T ROS_PACKAGE_PATH ros_package_path :
     ros_package_path+=("$ROS_PACKAGE_PATH" "$PX4_ROOT" "$PX4_ROOT/Tools/sitl_gazebo")
@@ -135,3 +131,12 @@ ACADOS_LIBDIR=$ACADOS_SOURCE_DIR/lib
 if [[ ":$LD_LIBRARY_PATH:" != *":$ACADOS_LIBDIR:"* ]]; then
   export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ACADOS_LIBDIR"
 fi
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+export VCPKG_ROOT="$HOME/vcpkg"
+[ -s "$VCPKG_ROOT/scripts/vcpkg_completion.zsh" ] && \. "$VCPKG_ROOT/scripts/vcpkg_completion.zsh"
+
+export PATH=$PATH:~/clangd/clangd_15.0.3/bin
