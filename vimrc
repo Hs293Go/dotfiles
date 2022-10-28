@@ -30,8 +30,8 @@ set hlsearch
 set ignorecase
 set incsearch
 set ts=4 sw=4 softtabstop=4 expandtab
-autocmd FileType c,cpp,h,hpp set ts=2 sw=2 softtabstop=2 expandtab
-autocmd Filetype py set tw=88 foldmethod=indent
+autocmd FileType c,cpp set ts=2 sw=2 softtabstop=2 expandtab
+autocmd Filetype python set tw=88 foldmethod=indent
 set backspace=indent,eol,start
 
 set signcolumn=yes
