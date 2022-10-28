@@ -31,6 +31,7 @@ set ignorecase
 set incsearch
 set ts=4 sw=4 softtabstop=4 expandtab
 autocmd FileType c,cpp,h,hpp set ts=2 sw=2 softtabstop=2 expandtab
+autocmd Filetype py set tw=88 foldmethod=indent
 set backspace=indent,eol,start
 
 set signcolumn=yes
@@ -50,11 +51,17 @@ nmap <silent> <leader>w :set nowrap!<CR>
 "hide hightlight of searches"
 nmap <silent> // :nohlsearch<CR>
 
-" Tmux style pane switching
-map <C-a><Left> <C-w>h
-map <C-a><Down> <C-w>j
-map <C-a><Up> <C-w>k
-map <C-a><Right> <C-w>l
+"Toggle folding
+inoremap <F9> <C-O>za
+nnoremap <F9> za
+onoremap <F9> <C-C>za
+vnoremap <F9> zf
+
+" Tmux prefix but vim directions for pane switching
+map <C-a>h <C-w>h
+map <C-a>j <C-w>j
+map <C-a>k <C-w>k
+map <C-a>l <C-w>l
 
 map <Tab> :bnext<CR>
 map <S-Tab> :bprev<CR>
@@ -63,12 +70,12 @@ nmap <C-t> :tabnew<CR>
 
 " Maximize only this window"
 nmap <silent> <leader>m :only<CR>
-"vertical split"
-nmap <silent> <leader>v :bel :vne<CR>
-"horizontal split"
-nmap <silent> <leader>h :bel :new<CR>
-"close viewport buffer"
-nmap <silent> <leader>x :hid<CR>
+"vertical split tmux style
+nmap <silent> <C-a>" :bel :vne<CR>
+"horizontal split tmux style
+nmap <silent> <C-a>% :bel :new<CR>
+"close viewport buffer tmux style
+nmap <silent> <C-a>d :hid<CR>
 " }}}
 
 " Edit the .bashrc"

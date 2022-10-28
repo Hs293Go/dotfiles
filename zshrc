@@ -49,6 +49,9 @@ zinit depth=1 lucid nocd for romkatv/powerlevel10k
 
 zinit ice pick"init.sh"; zinit light b4b4r07/enhancd
 
+export NVM_COMPLETION=true
+export NVM_SYMLINK_CURRENT="true"
+zinit wait lucid light-mode for lukechilds/zsh-nvm
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -131,10 +134,6 @@ ACADOS_LIBDIR=$ACADOS_SOURCE_DIR/lib
 if [[ ":$LD_LIBRARY_PATH:" != *":$ACADOS_LIBDIR:"* ]]; then
   export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:$ACADOS_LIBDIR"
 fi
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 export VCPKG_ROOT="$HOME/vcpkg"
 [ -s "$VCPKG_ROOT/scripts/vcpkg_completion.zsh" ] && \. "$VCPKG_ROOT/scripts/vcpkg_completion.zsh"
