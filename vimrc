@@ -7,16 +7,19 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 
 endif
 
+let g:ale_disable_lsp = 1
+let g:coc_global_extensions = ['coc-json',
+            \ 'coc-git',
+            \ 'coc-clangd',
+            \ 'coc-pyright']
+
 call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'psf/black', { 'branch': 'stable' }
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'dense-analysis/ale'
-Plug 'clangd/coc-clangd', {'do': 'yarn install --frozen-lockfile'}
-Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
 call plug#end()
 
 syntax on
@@ -33,6 +36,7 @@ set backspace=indent,eol,start
 set signcolumn=yes
 so ~/.coc_conf.vim
 
+let mapleader=" "
 nnoremap ; :
 
 "reload the .vimrc
@@ -50,17 +54,19 @@ nmap <silent> // :nohlsearch<CR>
 map <C-a><Left> <C-w>h
 map <C-a><Down> <C-w>j
 map <C-a><Up> <C-w>k
-map <C-a><Left> <C-w>l
+map <C-a><Right> <C-w>l
 
 map <Tab> :bnext<CR>
-map <Shift-Tab> :bprev<CR>
+map <S-Tab> :bprev<CR>
+
+nmap <C-t> :tabnew<CR>
 
 " Maximize only this window"
 nmap <silent> <leader>m :only<CR>
 "vertical split"
 nmap <silent> <leader>v :bel :vne<CR>
 "horizontal split"
-nmap <silent> <leader>f :bel :new<CR>
+nmap <silent> <leader>h :bel :new<CR>
 "close viewport buffer"
 nmap <silent> <leader>x :hid<CR>
 " }}}
@@ -82,14 +88,12 @@ highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
 let &t_TI = ""
 let &t_TE = ""
 
-" Black formatter
-augroup black_on_save
-    autocmd!
-    autocmd BufWritePre *.py Black
-augroup end
 let g:airline_powerline_fonts = 1
 let g:airline_theme='molokai'
 let g:ale_linters= {'python' : ['pylint', 'flake8'], 'cpp' : ['clangd'] }
-let g:ale_python_flake8_options='--max-line-length=88'
+let g:ale_fixers = { '*': ['remove_trailing_lines', 'trim_whitespace'],
+            \ 'python': ['black']
+            \}
+let g:ale_fix_on_save = 1
+let g:ale_python_flake8_options='--config=~/.flake8'
 let g:ale_python_pylint_options='--rcfile=~/.pylintrc'
-
