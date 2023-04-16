@@ -1,0 +1,9 @@
+[user]
+	email = hellston20a@gmail.com
+	name = Hs293Go
+[core]
+	editor = vim
+[credential]
+	helper = store
+[branch]
+	autosetuprebase = always

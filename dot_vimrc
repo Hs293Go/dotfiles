@@ -1,0 +1,154 @@
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+
+if empty(glob(data_dir . '/autoload/plug.vim'))
+
+    silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+
+endif
+
+let g:ale_disable_lsp = 1
+let g:coc_global_extensions = ['coc-json',
+            \ 'coc-git',
+            \ 'coc-clangd',
+            \ 'coc-pyright',
+            \ 'coc-cmake',
+            \ 'coc-toml',
+            \ 'coc-vimtex',
+            \ 'coc-snippets']
+
+call plug#begin()
+Plug 'tpope/vim-sensible'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'dense-analysis/ale'
+Plug 'lervag/vimtex'
+Plug 'honza/vim-snippets'
+Plug 'ilyachur/cmake4vim'
+call plug#end()
+
+syntax on
+set encoding=utf-8
+set number
+set noswapfile
+set hlsearch
+set ignorecase
+set incsearch
+set ts=4 sw=4 sts=4 expandtab
+au FileType cpp setlocal ts=2 sw=2 sts=2 expandtab
+au FileType python setlocal foldmethod=indent makeprg=python\ %
+set backspace=indent,eol,start
+
+set signcolumn=yes
+so ~/.coc_conf.vim
+
+let mapleader=" "
+
+let maplocalleader = " "
+nnoremap <C-s> <Plug>(vimtex-compile)
+nnoremap <F5> :make<CR>
+
+"reload the .vimrc
+nmap <silent> <leader>rv :source ~/.vimrc<CR>
+"show spaces
+nmap <silent> <leader>s :set nolist!<CR>
+"show line numbers
+nmap <silent> <leader>l :set nonu!<CR>
+"wrap lines
+nmap <silent> <leader>w :set nowrap!<CR>
+"hide hightlight of searches
+nmap <silent> // :nohlsearch<CR>
+
+" Delete a buffer without losing the window
+" https://stackoverflow.com/questions/4465095
+nmap <silent> <C-c> :bp\|bd #<CR>
+
+"Toggle folding
+inoremap <F9> <C-O>za
+nnoremap <F9> za
+onoremap <F9> <C-C>za
+vnoremap <F9> zf
+
+nnoremap <C-a> <C-w>
+tnoremap <C-a> <C-w>
+
+map <Tab> :bnext<CR>
+map <S-Tab> :bprev<CR>
+
+nmap <C-t> :tabnew<CR>
+
+" Maximize only this window"
+nmap <silent> <leader>m :only<CR>
+"vertical split tmux style
+nmap <silent> <C-a>" :bel :vne<CR>
+"horizontal split tmux style
+nmap <silent> <C-a>% :bel :new<CR>
+"close viewport buffer tmux style
+nmap <silent> <C-a>d :hid<CR>
+" }}}
+
+" Edit the .bashrc"
+nmap <silent> <leader>eb :e ~/.bashrc<CR>
+" Edit the .zshrc"
+nmap <silent> <leader>ez :e ~/.zshrc<CR>
+" Edit the .vimrc"
+nmap <silent> <leader>ev :e ~/.vimrc<CR>
+" Edit the .gitconfig"
+nmap <silent> <leader>eg :e ~/.gitconfig<CR>
+" Edit the .tmux.conf"
+nmap <silent> <leader>et :e ~/.tmux.conf<CR>
+
+" remap colon to semicolon in normal and visual mode, but not in insert mode
+nnoremap ; :
+vnoremap ; :
+nnoremap :: ;
+vnoremap :: ;
+
+filetype plugin indent on
+
+highlight Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
+highlight CocInlayHint ctermfg=48 ctermbg=248 guifg=#15aabf guibg=Grey
+let &t_TI = ""
+let &t_TE = ""
+
+" Use <C-l> for trigger snippet expand.
+imap <C-e> <Plug>(coc-snippets-expand)
+
+" Use <C-j> for select text for visual placeholder of snippet.
+vmap <C-j> <Plug>(coc-snippets-select)
+
+" Use <C-j> for jump to next placeholder, it's default of coc.nvim
+let g:coc_snippet_next = '<c-j>'
+
+" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
+let g:coc_snippet_prev = '<c-k>'
+
+" Use <C-j> for both expand and jump (make expand higher priority.)
+imap <C-j> <Plug>(coc-snippets-expand-jump)
+
+" Use <leader>x for convert visual selected code to snippet
+xmap <leader>x  <Plug>(coc-convert-snippet)
+
+let g:airline_powerline_fonts = 1
+let g:airline_theme='molokai'
+let g:ale_linters= {'python' : ['pylint', 'flake8'],
+            \ 'cpp' : ['cpplint', 'cppcheck']
+            \}
+let g:ale_fixers = { '*': ['remove_trailing_lines', 'trim_whitespace'],
+            \ 'python': ['black', 'isort'],
+            \ 'toml': ['prettier'],
+            \ 'json': ['prettier'],
+            \ 'cpp' : ['clang-format'],
+            \ 'c' : ['clang-format'],
+            \ 'cmake': ['cmakeformat'],
+            \ 'tex' : ['latexindent']
+            \}
+let g:ale_fix_on_save = 1
+let g:ale_python_flake8_options='--ignore=E203 --max-line-length=88'
+let g:ale_python_pylint_options='--rcfile=~/.pylintrc'
+let g:ale_cmake_cmakeformat_executable='cmake-format'
+let g:ale_cpp_cpplint_options='--filter=-runtime/references'
+let g:ale_set_highlights = 1
