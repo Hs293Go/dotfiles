@@ -1,0 +1,21 @@
+# clangd cache
+.cache
+cmake-build-*/
+
+a.out
+*.sw[nop]
+.pyc
+.DS_Store
+.bundle
+.byebug_history
+.env
+.git/
+/bower_components/
+/log
+/node_modules/
+/tmp
+db/*.sqlite3
+log/*.log
+rerun.txt
+tmp/**/*
+/tags

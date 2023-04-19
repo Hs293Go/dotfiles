@@ -3,6 +3,7 @@
 	name = Hs293Go
 [core]
 	editor = vim
+	excludesFile = ~/.gitignore
 [credential]
 	helper = store
 [branch]

@@ -131,6 +131,7 @@ if [ ! -z ${PX4_ROOT+x} ] ; then
 fi
 
 alias cls="clear"
+alias cm="chezmoi"
 alias gzkill="killall gzserver gzclient"
 
 if which QGroundControl > /dev/null ; then
