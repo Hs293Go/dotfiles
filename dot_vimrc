@@ -23,7 +23,9 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+if executable('node') && v:version > 801
+    Plug 'neoclide/coc.nvim', {'branch': 'release'}
+endif
 Plug 'dense-analysis/ale'
 Plug 'lervag/vimtex'
 Plug 'honza/vim-snippets'
