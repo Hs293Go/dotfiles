@@ -42,6 +42,10 @@ set incsearch
 set ts=4 sw=4 sts=4 expandtab
 au FileType cpp setlocal ts=2 sw=2 sts=2 expandtab
 au FileType python setlocal foldmethod=indent makeprg=python\ %
+au FileType tex nnoremap <F5> <Plug>(vimtex-compile)
+au FileType cpp nnoremap <F5> <Plug>(CMake)
+au FileType cpp nnoremap <F7> <Plug>(CMakeBuild)
+au FileType cpp nnoremap <S-F5> <Plug>(CMakeRun)
 set backspace=indent,eol,start
 
 set signcolumn=yes
@@ -50,8 +54,6 @@ so ~/.coc_conf.vim
 let mapleader=" "
 
 let maplocalleader = " "
-nnoremap <C-s> <Plug>(vimtex-compile)
-nnoremap <F5> :make<CR>
 
 "reload the .vimrc
 nmap <silent> <leader>rv :source ~/.vimrc<CR>
@@ -136,6 +138,8 @@ xmap <leader>x  <Plug>(coc-convert-snippet)
 
 let g:airline_powerline_fonts = 1
 let g:airline_theme='molokai'
+let g:airline#extensions#ale#enabled = 1
+let g:ale_virtualtext_cursor = 'disabled'
 let g:ale_linters= {'python' : ['pylint', 'flake8'],
             \ 'cpp' : ['cpplint', 'cppcheck']
             \}
@@ -154,3 +158,6 @@ let g:ale_python_pylint_options='--rcfile=~/.pylintrc'
 let g:ale_cmake_cmakeformat_executable='cmake-format'
 let g:ale_cpp_cpplint_options='--filter=-runtime/references'
 let g:ale_set_highlights = 1
+
+let g:cmake_build_dir = 'build'
+let g:cmake_compile_commands = 1
