@@ -1,4 +1,5 @@
 {
   "python.pythonPath": "python3",
-  "diagnostic.displayByAle": true
+  "diagnostic.displayByAle": true,
+  "semanticTokens.enable": true
 }

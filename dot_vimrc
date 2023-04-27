@@ -30,9 +30,11 @@ Plug 'dense-analysis/ale'
 Plug 'lervag/vimtex'
 Plug 'honza/vim-snippets'
 Plug 'ilyachur/cmake4vim'
+Plug 'sickill/vim-monokai'
 call plug#end()
 
 syntax on
+colorscheme monokai
 set encoding=utf-8
 set number
 set noswapfile
