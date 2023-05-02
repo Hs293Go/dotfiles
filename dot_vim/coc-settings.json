@@ -1,5 +1,9 @@
 {
-  "python.pythonPath": "python3",
-  "diagnostic.displayByAle": true,
-  "semanticTokens.enable": true
+    "python.pythonPath": "python3",
+    "python.formatting.provider": "black",
+    "diagnostic.displayByAle": true,
+    "semanticTokens.enable": true,
+    "coc.preferences.formatOnSave": true,
+    "inlayHint.display": true,
+    "diagnostic.virtualText": false
 }
