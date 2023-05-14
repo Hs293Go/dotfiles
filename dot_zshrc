@@ -66,8 +66,6 @@ command -v docker > /dev/null && zinit snippet OMZP::docker
 # Load the tmux plugin only if tmux is available
 command -v tmux > /dev/null && zinit snippet OMZP::tmux
 
-zplg load $HOME/zshros
-
 # Convenient bash settings pulled from bashrc
 # enable color support of ls and also add handy aliases
 if [ -x /usr/bin/dircolors ]; then
@@ -130,9 +128,9 @@ if [ ! -z ${PX4_ROOT+x} ] ; then
     source $PX4_ROOT/Tools/simulation/gazebo/setup_gazebo.bash $PX4_ROOT $PX4_ROOT/build/px4_sitl_default > /dev/null 2>&1
 fi
 
-alias cls="clear"
-alias cm="chezmoi"
-alias gzkill="killall gzserver gzclient"
+if [[ -r ~/.aliasrc ]]; then
+    . ~/.aliasrc
+fi
 
 if which QGroundControl > /dev/null ; then
     alias QGroundControl='QGroundControl > /dev/null 2>&1 &'

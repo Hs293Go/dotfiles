@@ -1,0 +1,58 @@
+alias ec="$EDITOR $HOME/.zshrc" # edit .zshrc
+alias sc="source $HOME/.zshrc"  # reload zsh configuration
+
+alias cls='clear'
+
+alias cm='chezmoi'
+alias cme='chezmoi edit'
+alias cmec='chezmoi edit-config'
+alias cmcd='chezmoi cd'
+alias cma='chezmoi add -v'
+alias cmap='chezmoi apply -v'
+alias cmpf='cd `chezmoi source-path` && git push --force-with-lease'
+
+alias cfg='cmake -S . -B build'
+alias bld='cmake --build build'
+alias ins='cmake --install build'
+
+if [ ! -z ${ROS_VERSION+x} ] ; then
+    if [ $ROS_VERSION -eq 1 ] ; then
+        alias rlch='roslaunch'
+        alias rrun='rosrun'
+
+        alias rn='rosnode list'
+        alias rni='rosnode info'
+        alias rosmaster='roscore'
+        alias rpf='rospack find'
+        alias rpl='rospack list'
+        alias rsarg='rosservice args'
+
+        alias rsc='rosservice call'
+        alias rsf='rosservice find'
+        alias rsi='rosservice info'
+        alias rsl='rosservice list'
+        alias rst='rosservice type'
+
+        alias rte='rostopic echo'
+        alias rtf='rostopic find'
+        alias rti='rostopic info'
+        alias rtl='rostopic list'
+        alias rtt='rostopic type'
+        alias rtp='rostopic pub'
+
+        alias rbra='rosbag record --all'
+        alias rbi='rosbag info'
+
+        _apt_pref=${apt_pref:-apt}
+
+        rin() {
+            sudo $_apt_pref install -y --no-install-recommends ros-$ROS_DISTRO-$1
+        }
+
+        rrm() {
+            sudo $_apt_pref remove ros-$ROS_DISTRO-$1
+        }
+    else
+        # WIP: We are not using ROS 2 yet...
+    fi
+fi
