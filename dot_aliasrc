@@ -11,9 +11,9 @@ alias cma='chezmoi add -v'
 alias cmap='chezmoi apply -v'
 alias cmpf='cd `chezmoi source-path` && git push --force-with-lease'
 
-alias cfg='cmake -S . -B build'
+alias cfg='cmake -S . -B build -GNinja'
 alias bld='cmake --build build'
-alias ins='cmake --install build'
+alias ins='sudo cmake --install build'
 
 if [ ! -z ${ROS_VERSION+x} ] ; then
     if [ $ROS_VERSION -eq 1 ] ; then

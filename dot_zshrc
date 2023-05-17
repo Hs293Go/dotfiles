@@ -9,6 +9,8 @@ fi
 HISTFILE=~/.histfile
 HISTSIZE=1000
 SAVEHIST=10000
+
+setopt autocd nomatch notify cdablevars
 bindkey -v
 # End of lines configured by zsh-newuser-install
 # The following lines were added by compinstall
@@ -119,8 +121,8 @@ case "$(lsb_release -sc)" in
 *) ;;
 esac
 
-export ROS_WS_DIR=~/catkin_ws
-[ -s "$ROS_WS_DIR/devel/setup.zsh" ] && source $HOME/catkin_ws/devel/setup.zsh
+
+[ -s "$CATKIN_WS/devel/setup.zsh" ] && source $HOME/catkin_ws/devel/setup.zsh
 
 if [ ! -z ${PX4_ROOT+x} ] ; then
     typeset -T ROS_PACKAGE_PATH ros_package_path :
@@ -135,5 +137,3 @@ fi
 if which QGroundControl > /dev/null ; then
     alias QGroundControl='QGroundControl > /dev/null 2>&1 &'
 fi
-
-export ACADOS_SOURCE_DIR=$HOME/src/acados

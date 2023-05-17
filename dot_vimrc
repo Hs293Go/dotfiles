@@ -17,17 +17,20 @@ let g:coc_global_extensions = ['coc-json',
             \ 'coc-vimtex',
             \ 'coc-snippets']
 
+function! Cond(cond, ...)
+  let opts = get(a:000, 0, {})
+  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+endfunction
+
 call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-if executable('node') && v:version > 801
-    Plug 'neoclide/coc.nvim', {'branch': 'release'}
-endif
+Plug 'neoclide/coc.nvim', Cond(executable('node') && v:version > 801, {'branch': 'release'})
 Plug 'dense-analysis/ale'
-Plug 'lervag/vimtex'
+Plug 'lervag/vimtex', { 'for', 'tex' }
 Plug 'honza/vim-snippets'
 Plug 'ilyachur/cmake4vim'
 Plug 'sickill/vim-monokai'

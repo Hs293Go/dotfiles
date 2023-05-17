@@ -1,0 +1,16 @@
+typeset -U path
+typeset -T LD_LIBRARY_PATH ld_library_path :
+
+export VCPKG_DEFAULT_TRIPLET="x64-linux"
+export VCPKG_ROOT="$HOME/vcpkg"
+
+export CATKIN_WS="$HOME/catkin_ws"
+export TEX_WS="$HOME/Documents/TeX"
+export MAT_WS="$HOME/Documents/MATLAB"
+export PX4_ROOT="$HOME/src/PX4-Autopilot"
+export ACADOS_SOURCE_DIR=$HOME/src/acados
+
+path+=("$VCPKG_ROOT" \
+"/usr/lib/ccache" \
+)
+. "$HOME/.cargo/env"
