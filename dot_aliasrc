@@ -3,6 +3,12 @@ alias sc="source $HOME/.zshrc"  # reload zsh configuration
 
 alias cls='clear'
 
+alias vc='vcpkg'
+alias vcs='vcpkg search'
+alias vcl='vcpkg list'
+alias vci='vcpkg install'
+alias vcu='(cd $VCPKG_ROOT && git pull --rebase)'
+
 alias cm='chezmoi'
 alias cme='chezmoi edit'
 alias cmec='chezmoi edit-config'
