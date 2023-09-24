@@ -127,8 +127,8 @@ esac
 
 if [ ! -z ${PX4_ROOT+x} ] ; then
     typeset -T ROS_PACKAGE_PATH ros_package_path :
-    ros_package_path+=("$ROS_PACKAGE_PATH" "$PX4_ROOT" "$PX4_ROOT/Tools/simulation/gazebo")
-    source $PX4_ROOT/Tools/simulation/gazebo/setup_gazebo.bash $PX4_ROOT $PX4_ROOT/build/px4_sitl_default > /dev/null 2>&1
+    ros_package_path+=("$ROS_PACKAGE_PATH" "$PX4_ROOT" "$PX4_ROOT/Tools/simulation/gazebo-classic")
+    source $PX4_ROOT/Tools/simulation/gazebo-classic/setup_gazebo.bash $PX4_ROOT $PX4_ROOT/build/px4_sitl_default > /dev/null 2>&1
 fi
 
 if [[ -r ~/.aliasrc ]]; then

@@ -59,6 +59,7 @@ if [ ! -z ${ROS_VERSION+x} ] ; then
             sudo $_apt_pref remove ros-$ROS_DISTRO-$1
         }
     else
+        :
         # WIP: We are not using ROS 2 yet...
     fi
 fi
