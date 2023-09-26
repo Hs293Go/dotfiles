@@ -2,6 +2,9 @@
 .cache
 cmake-build-*/
 
+# CMake user presets
+CMakeUserPresets.json
+
 a.out
 *.sw[nop]
 .pyc
