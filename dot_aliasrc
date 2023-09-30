@@ -1,6 +1,8 @@
 alias ec="$EDITOR $HOME/.zshrc" # edit .zshrc
 alias sc="source $HOME/.zshrc"  # reload zsh configuration
 
+alias rm='rm -I'
+alias rd='rm -Ir'
 alias cls='clear'
 
 alias vc='vcpkg'
