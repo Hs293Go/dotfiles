@@ -1,6 +1,10 @@
 alias ec="$EDITOR $HOME/.zshrc" # edit .zshrc
 alias sc="source $HOME/.zshrc"  # reload zsh configuration
 
+if [ "$TERM" = 'xterm-kitty' ] ; then
+    alias ssh='kitty +kitten ssh'
+fi
+
 alias rm='rm -I'
 alias rd='rm -Ir'
 alias cls='clear'
