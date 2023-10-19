@@ -68,13 +68,15 @@ let maplocalleader = " "
 "reload the .vimrc
 nmap <silent> <leader>rv :source ~/.vimrc<CR>
 "show spaces
-nmap <silent> <leader>s :set nolist!<CR>
+nmap <silent> <leader>S :set nolist!<CR>
 "show line numbers
 nmap <silent> <leader>l :set nonu!<CR>
 "wrap lines
 nmap <silent> <leader>w :set nowrap!<CR>
 "hide hightlight of searches
 nmap <silent> // :nohlsearch<CR>
+
+nmap <silent> gA ggvG$
 
 " Delete a buffer without losing the window
 " https://stackoverflow.com/questions/4465095

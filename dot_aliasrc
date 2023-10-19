@@ -7,6 +7,7 @@ fi
 
 alias rm='rm -I'
 alias rd='rm -Ir'
+alias md='mkdir -p'
 alias cls='clear'
 
 alias vc='vcpkg'

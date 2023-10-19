@@ -138,3 +138,7 @@ fi
 if which QGroundControl > /dev/null ; then
     alias QGroundControl='QGroundControl > /dev/null 2>&1 &'
 fi
+
+command -v thefuck > /dev/null 2>&1 && eval $(thefuck --alias fk)
+
+command -v direnv > /dev/null 2>&1 && eval "$(direnv hook zsh)"
