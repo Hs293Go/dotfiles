@@ -21,8 +21,8 @@ let g:coc_global_extensions = ['coc-json',
             \ 'coc-snippets']
 
 function! Cond(cond, ...)
-  let opts = get(a:000, 0, {})
-  return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
+    let opts = get(a:000, 0, {})
+    return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
 endfunction
 
 call plug#begin()
@@ -124,6 +124,8 @@ nnoremap :: ;
 vnoremap :: ;
 nnoremap ! :!
 
+inoremap <C-v> <C-r>*
+
 filetype plugin indent on
 
 hi Normal ctermbg=none
@@ -175,4 +177,5 @@ let g:cmake_compile_commands = 1
 let g:vimtex_view_general_viewer = 'okular'
 let g:vimtex_compiler_latexmk = {
             \ 'build_dir' : 'build',
+            \ 'out_dir' : 'build',
             \}
