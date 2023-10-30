@@ -1,6 +1,9 @@
 {
     "python.pythonPath": "python3",
     "python.formatting.provider": "black",
+    "python.formatting.blackArgs": [
+        "--preview"
+    ],
     "diagnostic.displayByAle": true,
     "semanticTokens.enable": true,
     "coc.preferences.formatOnSave": true,
