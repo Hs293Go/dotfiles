@@ -9,6 +9,7 @@ alias rm='rm -I'
 alias rd='rm -Ir'
 alias md='mkdir -p'
 alias cls='clear'
+alias xc='xclip -selection c'
 
 alias vc='vcpkg'
 alias vcs='vcpkg search'
@@ -27,6 +28,13 @@ alias cmpf='cd `chezmoi source-path` && git push --force-with-lease'
 alias cfg='cmake -S . -B build -GNinja'
 alias bld='cmake --build build'
 alias ins='sudo cmake --install build'
+
+if [ "${${$(python -V 2>&1)#*\ }%%.*}" = "2" ]
+then
+    alias py=python3
+else
+    alias py=python
+fi
 
 if [ ! -z ${ROS_VERSION+x} ] ; then
     if [ $ROS_VERSION -eq 1 ] ; then
