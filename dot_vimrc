@@ -91,6 +91,9 @@ vnoremap <F9> zf
 nnoremap <C-a> <C-w>
 tnoremap <C-a> <C-w>
 
+" Unlist terminal buffers
+autocmd TerminalOpen * if bufwinnr('') > 0 | setlocal nobuflisted | endif
+
 map <Tab> :bnext<CR>
 map <S-Tab> :bprev<CR>
 
