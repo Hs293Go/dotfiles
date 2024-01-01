@@ -122,6 +122,7 @@ verbatimCommands:
 noIndentBlock:
     noindent: 1
     cmhtest: 1
+    appendices: 1
 
 # \begin{document} and \end{document} are treated differently
 # by latexindent within filecontents environments
@@ -322,6 +323,7 @@ noAdditionalIndent:
     widepage: 1
     comment: 1
     document: 1
+    appendices: 1
     frame: 0
 
 # if you have indent rules for particular code blocks
