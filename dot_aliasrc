@@ -11,6 +11,9 @@ alias md='mkdir -p'
 alias cls='clear'
 alias xc='xclip -selection c'
 
+alias bat='batcat'
+alias fd='fdfind'
+
 alias vc='vcpkg'
 alias vcs='vcpkg search'
 alias vcl='vcpkg list'
