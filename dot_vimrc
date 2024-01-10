@@ -37,6 +37,9 @@ Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'honza/vim-snippets'
 Plug 'ilyachur/cmake4vim'
 Plug 'sickill/vim-monokai'
+Plug 'junegunn/fzf', {'dir': '~/.fzf','do': './install --all'}
+Plug 'junegunn/fzf.vim'
+Plug 'antoinemadec/coc-fzf'
 call plug#end()
 
 syntax on
