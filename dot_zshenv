@@ -12,5 +12,6 @@ export ACADOS_SOURCE_DIR=$HOME/src/acados
 
 path+=("$VCPKG_ROOT" \
 "/usr/lib/ccache" \
+"/usr/local/cuda/bin"
 )
 . "$HOME/.cargo/env"

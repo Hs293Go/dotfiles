@@ -4,9 +4,14 @@
 [core]
 	editor = vim
 	excludesFile = ~/.gitignore
+	attributesfile = ~/.gitattributes
 [credential]
 	helper = store
 [branch]
 	autosetuprebase = always
 [include]
     path = ~/.gitconfig.local
+[alias]
+	diff-image = "!f() { cd -- \"${GIT_PREFIX:-.}\"; GIT_DIFF_IMAGE_ENABLED=1 git diff \"$@\"; }; f"
+[diff "image"]
+	command = /home/hs293go/src/git-diff-image/git_diff_image

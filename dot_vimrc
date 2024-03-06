@@ -175,6 +175,7 @@ let g:ale_python_flake8_options='--ignore=E203,W503 --max-line-length=88'
 let g:ale_python_pylint_options='--rcfile=~/.pylintrc'
 let g:ale_cmake_cmakeformat_executable='cmake-format'
 let g:ale_cpp_cpplint_options='--filter=-runtime/references'
+let g:ale_tex_latexindent_options='-g /dev/null'
 let g:ale_set_highlights = 1
 
 let g:cmake_build_dir = 'build'
