@@ -10,8 +10,11 @@ export MAT_WS="$HOME/Documents/MATLAB"
 export PX4_ROOT="$HOME/src/PX4-Autopilot"
 export ACADOS_SOURCE_DIR=$HOME/src/acados
 
-path+=("$VCPKG_ROOT" \
-"/usr/lib/ccache" \
-"/usr/local/cuda/bin"
+path+=("$VCPKG_ROOT"
+  "/usr/lib/ccache"
+  "/usr/local/cuda/bin"
+)
+
+ld_library_path+=("/usr/local/cuda/lib64"
 )
 . "$HOME/.cargo/env"
