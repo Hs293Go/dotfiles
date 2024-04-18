@@ -119,6 +119,7 @@ case "$(lsb_release -sc)" in
 
     "bionic") source /opt/ros/melodic/setup.zsh ;;
     "focal") source /opt/ros/noetic/setup.zsh ;;
+    "jammy") source /opt/ros/humble/setup.zsh ;;
 *) ;;
 esac
 
