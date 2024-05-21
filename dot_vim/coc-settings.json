@@ -8,5 +8,8 @@
     "semanticTokens.enable": true,
     "coc.preferences.formatOnSave": true,
     "inlayHint.display": true,
-    "diagnostic.virtualText": false
+    "diagnostic.virtualText": false,
+    "clangd.arguments": [
+        "--header-insertion=never"
+    ]
 }
