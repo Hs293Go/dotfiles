@@ -12,7 +12,7 @@ alias cls='clear'
 alias xc='xclip -selection c'
 
 alias bat='batcat'
-alias fd='fdfind'
+command -v fdfind > /dev/null 2>&1 && alias fd='fdfind'
 
 alias vc='vcpkg'
 alias vcs='vcpkg search'

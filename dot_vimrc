@@ -59,6 +59,8 @@ au FileType cpp nnoremap <F5> <Plug>(CMake)
 au FileType cpp nnoremap <F7> <Plug>(CMakeBuild)
 au FileType cpp nnoremap <S-F5> <Plug>(CMakeRun)
 au FileType cpp nnoremap <C-S-F5> <Plug>(CTest)
+au BufRead,BufNewFile *.launch set filetype=xml
+au BufRead,BufNewFile *.sdf set filetype=xml
 set backspace=indent,eol,start
 
 set signcolumn=yes
