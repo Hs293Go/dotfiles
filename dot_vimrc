@@ -29,6 +29,8 @@ call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
+Plug 'preservim/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'ryanoasis/vim-devicons'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'neoclide/coc.nvim', Cond(executable('node') && v:version > 801, {'branch': 'release'})
@@ -87,6 +89,8 @@ nmap <silent> gA ggvG$
 " https://stackoverflow.com/questions/4465095
 nmap <silent> <C-c> :bp\|bd #<CR>
 
+nmap <silent> <leader>E :NERDTree<CR>
+
 "Toggle folding
 inoremap <F9> <C-O>za
 nnoremap <F9> za
@@ -110,17 +114,6 @@ nmap <silent> <C-a>% :bel :new<CR>
 "close viewport buffer tmux style
 nmap <silent> <C-a>d :hid<CR>
 " }}}
-
-" Edit the .bashrc"
-nmap <silent> <leader>eb :e ~/.bashrc<CR>
-" Edit the .zshrc"
-nmap <silent> <leader>ez :e ~/.zshrc<CR>
-" Edit the .vimrc"
-nmap <silent> <leader>ev :e ~/.vimrc<CR>
-" Edit the .gitconfig"
-nmap <silent> <leader>eg :e ~/.gitconfig<CR>
-" Edit the .tmux.conf"
-nmap <silent> <leader>et :e ~/.tmux.conf<CR>
 
 " remap colon to semicolon in normal and visual mode, but not in insert mode
 nnoremap ; :
@@ -170,7 +163,7 @@ let g:ale_fixers = { '*': ['remove_trailing_lines', 'trim_whitespace'],
             \ 'tex' : ['latexindent']
             \}
 let g:ale_fix_on_save = 1
-let g:ale_python_flake8_options='--ignore=E203,W503 --max-line-length=88'
+let g:ale_python_flake8_options='--ignore=E203,W503,D102,D107 --max-line-length=88 --inline-quotes=double'
 let g:ale_python_pylint_options='--rcfile=~/.pylintrc'
 let g:ale_cmake_cmakeformat_executable='cmake-format'
 let g:ale_cpp_cpplint_options='--filter=-runtime/references'

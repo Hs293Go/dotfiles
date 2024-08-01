@@ -4,6 +4,7 @@
     "python.formatting.blackArgs": [
         "--preview"
     ],
+    "python.analysis.stubPath": "typings",
     "diagnostic.displayByAle": true,
     "semanticTokens.enable": true,
     "coc.preferences.formatOnSave": true,
