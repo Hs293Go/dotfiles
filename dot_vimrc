@@ -163,7 +163,7 @@ let g:ale_fixers = { '*': ['remove_trailing_lines', 'trim_whitespace'],
             \ 'tex' : ['latexindent']
             \}
 let g:ale_fix_on_save = 1
-let g:ale_python_flake8_options='--ignore=E203,W503,D102,D107 --max-line-length=88 --inline-quotes=double'
+let g:ale_python_flake8_options='--config ~/.flake8'
 let g:ale_python_pylint_options='--rcfile=~/.pylintrc'
 let g:ale_cmake_cmakeformat_executable='cmake-format'
 let g:ale_cpp_cpplint_options='--filter=-runtime/references'
