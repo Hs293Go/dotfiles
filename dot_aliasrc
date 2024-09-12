@@ -11,6 +11,8 @@ alias md='mkdir -p'
 alias cls='clear'
 alias xc='xclip -selection c'
 
+alias killlast='kill -15 %1'
+
 alias bat='batcat'
 command -v fdfind > /dev/null 2>&1 && alias fd='fdfind'
 
