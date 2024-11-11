@@ -54,7 +54,7 @@ set ignorecase
 set incsearch
 set noeb vb t_vb=
 set ts=4 sw=4 sts=4 expandtab
-au FileType cpp setlocal ts=2 sw=2 sts=2 expandtab
+au FileType cpp,c setlocal ts=2 sw=2 sts=2 expandtab
 au FileType python setlocal foldmethod=indent makeprg=python\ %
 au FileType tex nnoremap <F5> <Plug>(vimtex-compile)
 au FileType cpp nnoremap <F5> <Plug>(CMake)
@@ -122,7 +122,12 @@ nnoremap :: ;
 vnoremap :: ;
 nnoremap ! :!
 
-inoremap <C-v> <C-r>*
+"Increment number (plus)
+nnoremap <C-p> <C-a>
+vnoremap <C-p> <C-a>
+"Decrement number (minus)
+nnoremap <C-m> <C-x>
+vnoremap <C-m> <C-x>
 
 filetype plugin indent on
 
