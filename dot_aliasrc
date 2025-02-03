@@ -14,6 +14,9 @@ alias md='mkdir -p'
 alias cls='clear'
 alias xc='xclip -selection c'
 
+alias si='sed -i'
+alias pie='perl -pi -e'
+
 alias killlast='kill -15 %1'
 
 alias bat='batcat'
