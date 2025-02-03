@@ -18,7 +18,10 @@ let g:coc_global_extensions = ['coc-json',
             \ 'coc-cmake',
             \ 'coc-toml',
             \ 'coc-vimtex',
+            \ 'coc-ltex',
             \ 'coc-snippets']
+
+let g:coc_filetype_map = {'tex': 'latex'}
 
 function! Cond(cond, ...)
     let opts = get(a:000, 0, {})
@@ -26,6 +29,7 @@ function! Cond(cond, ...)
 endfunction
 
 call plug#begin()
+Plug 'github/copilot.vim'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-fugitive'
@@ -90,6 +94,9 @@ nmap <silent> gA ggvG$
 nmap <silent> <C-c> :bp\|bd #<CR>
 
 nmap <silent> <leader>E :NERDTree<CR>
+
+nnoremap <leader>a <C-a>
+nnoremap <leader>x <C-x>
 
 "Toggle folding
 inoremap <F9> <C-O>za
