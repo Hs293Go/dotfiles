@@ -2,7 +2,7 @@ alias ec="$EDITOR $HOME/.zshrc" # edit .zshrc
 alias sc="source $HOME/.zshrc"  # reload zsh configuration
 alias so='source'
 
-alias nv='neovim'
+alias nv='nvim'
 
 if [ "$TERM" = 'xterm-kitty' ] ; then
     alias ssh='kitty +kitten ssh'
