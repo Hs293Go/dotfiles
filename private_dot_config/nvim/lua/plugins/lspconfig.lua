@@ -3,21 +3,51 @@ return {
     "neovim/nvim-lspconfig", -- LSP configuration
     config = function()
         local lspconfig = require("lspconfig")
+        local on_attach = function(client, bufnr)
+            -- Keymaps for diagnostics navigation
+            vim.keymap.set('n', '<F8>', function()
+                vim.diagnostic.goto_next()
+            end, { buffer = bufnr, desc = "Go to next diagnostic" })
+
+            vim.keymap.set('n', '<S-F8>', function()
+                vim.diagnostic.goto_prev()
+            end, { buffer = bufnr, desc = "Go to previous diagnostic" })
+
+            -- Other LSP keymaps can be added here
+            if client.supports_method("textDocument/formatting") then
+                vim.api.nvim_create_autocmd("BufWritePre", {
+                    buffer = bufnr,
+                    callback = function()
+                        vim.lsp.buf.format({ async = false })
+                    end,
+                })
+            end
+        end
 
         lspconfig.clangd.setup {
             cmd = {
-                'clangd', '--background-index', '--clang-tidy', '--log=verbose'
+                'clangd',                  --
+                '--background-index',      -- Enable background indexing
+                '--clang-tidy',            -- Enable clang-tidy
+                '--header-insertion=never' -- Disable header insertion
             },
-            init_options = {fallbackFlags = {'-std=c++17'}}
+            init_options = { fallbackFlags = { '-std=c++17' } },
+            on_attach = on_attach
         }
 
-        lspconfig.texlab.setup({
+        lspconfig.pyright.setup {
+            on_attach = on_attach
+        }
+
+
+        lspconfig.texlab.setup {
             settings = {
                 texlab = {
-                    build = {onSave = true},
-                    diagnostics = {enabled = true}
+                    build = { onSave = true },
+                    diagnostics = { enabled = true }
                 }
-            }
-        })
+            },
+            on_attach = on_attach
+        }
     end
 }
