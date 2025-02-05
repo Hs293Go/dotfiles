@@ -8,13 +8,6 @@ return {
             require('gitsigns').setup()
         end
     },
-    {
-        "sainnhe/sonokai",
-        config = function()
-            vim.cmd('colorscheme sonokai')
-        end
-    }
-    ,                         -- Color scheme
     { "github/copilot.vim" }, -- GitHub Copilot integration
     {
         'nvim-telescope/telescope.nvim',
