@@ -3,6 +3,12 @@ return {
     "tpope/vim-surround", -- Surround text objects
     "tpope/vim-fugitive", -- Git integration
     {
+        "lewis6991/gitsigns.nvim",
+        config = function()
+            require('gitsigns').setup()
+        end
+    },
+    {
         "sainnhe/sonokai",
         config = function()
             vim.cmd('colorscheme sonokai')
