@@ -43,8 +43,17 @@ return {
         lspconfig.texlab.setup {
             settings = {
                 texlab = {
-                    build = { onSave = true },
-                    diagnostics = { enabled = true }
+                    build = {
+                        executable = "", -- Disable the build command
+                        args = {},
+                        forwardSearchAfter = false,
+                        onSave = false -- Prevent texlab from triggering builds
+                    },
+                    diagnostics = { enabled = true },
+                    chktex = {
+                        onOpenAndSave = true, -- Run chktex on open and save
+                        onEdit = true         -- Run chktex while editing
+                    }
                 }
             },
             on_attach = on_attach
