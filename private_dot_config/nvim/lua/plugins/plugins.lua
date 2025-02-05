@@ -8,7 +8,14 @@ return {
             require('gitsigns').setup()
         end
     },
-    { "github/copilot.vim" }, -- GitHub Copilot integration
+    {
+        "github/copilot.vim",
+        config = function()
+            vim.api.nvim_set_keymap('i', '<Right>', 'copilot#Accept("<CR>")',
+                { expr = true, noremap = true, silent = true })
+            vim.g.copilot_no_tab_map = true
+        end
+    }, -- GitHub Copilot integration
     {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.8',

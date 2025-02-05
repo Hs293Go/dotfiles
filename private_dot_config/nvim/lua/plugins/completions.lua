@@ -42,8 +42,12 @@ return {
                         end
                     end, { "i", "s" }),
                     ["<Tab>"] = cmp.mapping(function(fallback)
+                        local copilot_keys = vim.fn['copilot#Accept']()
                         if cmp.visible() then
                             cmp.select_next_item()
+                        elseif copilot_keys ~= '' then
+                            -- Also accept copilot suggestions when there's no completion menu
+                            vim.api.nvim_feedkeys(copilot_keys, 'i', true)
                         else
                             fallback()
                         end
