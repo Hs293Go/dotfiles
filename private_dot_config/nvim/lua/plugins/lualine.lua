@@ -43,7 +43,7 @@ return {
         }
         vim.g.sonokai_style = 'espresso'
         vim.g.sonokai_better_performance = 1
-
+        vim.g.sonokai_transparent_background = 1
         vim.cmd('colorscheme sonokai')
     end
 }
