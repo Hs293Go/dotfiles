@@ -36,6 +36,9 @@ return {
             -- Find References (Alt + F12)
             vim.keymap.set("n", "<A-F12>", vim.lsp.buf.references, opts)
         end
+
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
+        capabilities.offsetEncoding = { "utf-16" }
         lspconfig.clangd.setup {
             cmd = {
                 'clangd',                  --
@@ -44,7 +47,8 @@ return {
                 '--header-insertion=never' -- Disable header insertion
             },
             init_options = { fallbackFlags = { '-std=c++17' } },
-            on_attach = on_attach
+            on_attach = on_attach,
+            capabilities = capabilities
         }
 
         lspconfig.pyright.setup {
