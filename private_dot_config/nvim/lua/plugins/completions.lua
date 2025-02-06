@@ -13,6 +13,7 @@ return {
         config = function()
             local cmp = require("cmp")
             local luasnip = require("luasnip")
+            local suggestion = require("copilot.suggestion")
 
             cmp.setup({
                 snippet = {
@@ -42,12 +43,11 @@ return {
                         end
                     end, { "i", "s" }),
                     ["<Tab>"] = cmp.mapping(function(fallback)
-                        local copilot_keys = vim.fn['copilot#Accept']()
                         if cmp.visible() then
                             cmp.select_next_item()
-                        elseif copilot_keys ~= '' then
+                        elseif suggestion.is_visible() then
                             -- Also accept copilot suggestions when there's no completion menu
-                            vim.api.nvim_feedkeys(copilot_keys, 'i', true)
+                            suggestion.accept()
                         else
                             fallback()
                         end
