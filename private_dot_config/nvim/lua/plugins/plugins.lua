@@ -1,13 +1,6 @@
 return {
     "tpope/vim-sensible", -- Sensible defaults
     "tpope/vim-surround", -- Surround text objects
-    "tpope/vim-fugitive", -- Git integration
-    {
-        "lewis6991/gitsigns.nvim",
-        config = function()
-            require('gitsigns').setup()
-        end
-    },
     {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.8',
