@@ -22,8 +22,20 @@ return {
                     end,
                 })
             end
-        end
+            local opts = { noremap = true, silent = true, buffer = bufnr }
 
+            -- Go to Definition (F12)
+            vim.keymap.set("n", "<F12>", vim.lsp.buf.definition, opts)
+
+            -- Go to Declaration (Shift + F12)
+            vim.keymap.set("n", "<S-F12>", vim.lsp.buf.declaration, opts)
+
+            -- Go to Implementations (Ctrl + F12)
+            vim.keymap.set("n", "<C-F12>", vim.lsp.buf.implementation, opts)
+
+            -- Find References (Alt + F12)
+            vim.keymap.set("n", "<A-F12>", vim.lsp.buf.references, opts)
+        end
         lspconfig.clangd.setup {
             cmd = {
                 'clangd',                  --

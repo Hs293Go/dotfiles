@@ -71,6 +71,9 @@ vim.api.nvim_set_keymap('n', '<leader>w', ':set nowrap!<CR>', { silent = true })
 -- hide highlight of searches
 vim.api.nvim_set_keymap('n', '//', ':nohlsearch<CR>', { silent = true })
 
+vim.api.nvim_set_keymap('n', '<C-`>', ':belowright split | terminal<CR>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('v', '<C-`>', ':belowright split | terminal<CR>', { noremap = true, silent = true })
+
 -- Keymaps for navigating diagnostics
 vim.keymap.set('n', '<F8>', function()
     vim.diagnostic.goto_next() -- Jump to the next diagnostic
