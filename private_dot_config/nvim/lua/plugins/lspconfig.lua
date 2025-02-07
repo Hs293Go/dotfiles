@@ -35,6 +35,8 @@ return {
 
             -- Find References (Alt + F12)
             vim.keymap.set("n", "<A-F12>", vim.lsp.buf.references, opts)
+            -- Rename variable (F2)
+            vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts)
         end
 
         local capabilities = vim.lsp.protocol.make_client_capabilities()
