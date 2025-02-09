@@ -4,7 +4,8 @@ return {
   config = function()
     require("mason").setup()
     require('mason-lspconfig').setup({
-      ensure_installed = { "clangd", "texlab", "pyright" }
+      ensure_installed = { "clangd", "texlab", "pylsp" },
+      automatic_installation = true,
     })
   end
 }

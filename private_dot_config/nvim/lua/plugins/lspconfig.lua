@@ -80,8 +80,29 @@ return {
             capabilities = capabilities
         }
 
-        lspconfig.pyright.setup {
-            on_attach = on_attach
+        lspconfig.pylsp.setup {
+            settings = {
+                pylsp = {
+                    configurationSources = { "pylint" },
+                    plugins = {
+                        -- Mypy Type Checking
+                        pylsp_mypy = {
+                            enabled = true,
+                            live_mode = true, -- Real-time checking
+                            dmypy = true,     -- Use daemon mode for speed
+                        },
+                        -- Linting and Formatting
+                        flake8 = { enabled = true },
+                        black = { enabled = true },
+                        isort = { enabled = true },
+                        pylint = { enabled = true },
+                        autopep8 = { enabled = false },
+                        yapf = { enabled = false },
+                        pyflakes = { enabled = false },
+                    }
+                },
+            },
+            on_attach = on_attach,
         }
 
 
