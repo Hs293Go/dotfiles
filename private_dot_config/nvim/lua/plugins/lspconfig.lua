@@ -4,14 +4,19 @@ return {
     config = function()
         local lspconfig = require("lspconfig")
         local on_attach = function(client, bufnr)
-            -- Keymaps for diagnostics navigation
-            vim.keymap.set('n', '<F8>', function()
-                vim.diagnostic.goto_next()
-            end, { buffer = bufnr, desc = "Go to next diagnostic" })
+            local function make_opts(desc)
+                return { noremap = true, silent = true, buffer = bufnr, desc = desc }
+            end
 
-            vim.keymap.set('n', '<S-F8>', function()
-                vim.diagnostic.goto_prev()
-            end, { buffer = bufnr, desc = "Go to previous diagnostic" })
+            local function filter_actions(key)
+                return function(action)
+                    for _, k in ipairs(key) do
+                        if action.title:lower():match(k) then
+                            return true
+                        end
+                    end
+                end
+            end
 
             -- Other LSP keymaps can be added here
             if client.supports_method("textDocument/formatting") then
@@ -22,21 +27,43 @@ return {
                     end,
                 })
             end
-            local opts = { noremap = true, silent = true, buffer = bufnr }
 
-            -- Go to Definition (F12)
-            vim.keymap.set("n", "<F12>", vim.lsp.buf.definition, opts)
+            vim.api.nvim_create_autocmd("BufWritePre", {
+                pattern = { "*.ts", "*.tsx", "*.js", "*.jsx", "*.py" }, -- Adjust file types as needed
+                callback = function()
+                    -- Trigger the "organize imports" code action
+                    vim.lsp.buf.code_action({
+                        apply = true, -- Apply the action immediately
+                        filter = filter_actions { "organize imports" },
+                        context = {
+                            only = { "source.organizeImports" }, -- Only organize imports actions
+                        },
+                    })
+                end,
+            })
 
-            -- Go to Declaration (Shift + F12)
-            vim.keymap.set("n", "<S-F12>", vim.lsp.buf.declaration, opts)
+            vim.keymap.set("n", "<F12>", vim.lsp.buf.definition, make_opts("Go to definition"))
+            vim.keymap.set("n", "<M-S-F12>", vim.lsp.buf.type_definition, make_opts("Go to type definition"))
+            vim.keymap.set("n", "<C-S-F12>", vim.lsp.buf.implementation, make_opts("Go to implementation"))
+            vim.keymap.set("n", "<S-F12>", vim.lsp.buf.references, make_opts("Find references"))
+            vim.keymap.set("n", "K", vim.lsp.buf.hover, make_opts("Show hover information"))
+            vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, make_opts("Rename variable"))
+            vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, make_opts("Format document"))
+            vim.keymap.set("v", "<leader>f", vim.lsp.buf.format, make_opts("Format selection"))
+            vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, make_opts("Show code actions"))
+            vim.keymap.set("v", "<C-.>", vim.lsp.buf.code_action, make_opts("Show code actions on selection"))
+            vim.api.nvim_create_autocmd("CursorHold", { callback = vim.lsp.buf.document_highlight })
 
-            -- Go to Implementations (Ctrl + F12)
-            vim.keymap.set("n", "<C-F12>", vim.lsp.buf.implementation, opts)
+            -- Statusline integration
+            vim.opt.statusline:append("%{luaeval('vim.lsp.status()')}")
 
-            -- Find References (Alt + F12)
-            vim.keymap.set("n", "<A-F12>", vim.lsp.buf.references, opts)
-            -- Rename variable (F2)
-            vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, opts)
+            -- Keybindings for switchSourceHeader
+            vim.keymap.set("n", "<leader>O", "<cmd>ClangdSwitchSourceHeader<cr>",
+                { buffer = bufnr, desc = "Switch source/header" })
+            vim.keymap.set("n", "<leader>V", function()
+                vim.cmd "ClangdSwitchSourceHeader"
+                vim.cmd "vsplit" -- Open in a vertical split
+            end, { buffer = bufnr, desc = "Switch source/header (vsplit)" })
         end
 
         local capabilities = vim.lsp.protocol.make_client_capabilities()
