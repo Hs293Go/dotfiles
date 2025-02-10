@@ -7,9 +7,10 @@ return {
             "hrsh7th/cmp-nvim-lsp",     -- Source for LSP-based completions
             "L3MON4D3/LuaSnip",         -- Snippet engine
             "saadparwaiz1/cmp_luasnip", -- Source for LuaSnip completions
-            "onsails/lspkind.nvim"      -- Icons for completions
-
+            "onsails/lspkind.nvim",     -- Icons for completions
+            "micangl/cmp-vimtex"        -- Source for vimtex completions
         },
+        lazy = false,
         config = function()
             local cmp = require("cmp")
             local luasnip = require("luasnip")
