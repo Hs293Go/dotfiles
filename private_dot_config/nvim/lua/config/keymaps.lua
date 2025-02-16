@@ -21,7 +21,6 @@ vim.api.nvim_set_keymap('t', '<C-a>', '<C-w>', { noremap = true, silent = true }
 vim.api.nvim_set_keymap('n', '<Tab>', ':bnext<CR>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('n', '<S-Tab>', ':bprev<CR>', { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap('n', '<F5>', ':VimtexCompile<CR>', { noremap = true, silent = true })
 
 -- show spaces
 vim.api.nvim_set_keymap('n', '<leader>S', ':set nolist!<CR>', { silent = true })
