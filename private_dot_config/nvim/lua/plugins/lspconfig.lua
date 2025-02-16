@@ -58,7 +58,7 @@ return {
             vim.opt.statusline:append("%{luaeval('vim.lsp.status()')}")
 
             -- Keybindings for switchSourceHeader
-            vim.keymap.set("n", "<leader>O", "<cmd>ClangdSwitchSourceHeader<cr>",
+            vim.keymap.set("n", "<A-o>", "<cmd>ClangdSwitchSourceHeader<cr>",
                 { buffer = bufnr, desc = "Switch source/header" })
             vim.keymap.set("n", "<leader>V", function()
                 vim.cmd "ClangdSwitchSourceHeader"
@@ -92,7 +92,11 @@ return {
                             dmypy = true,     -- Use daemon mode for speed
                         },
                         -- Linting and Formatting
-                        flake8 = { enabled = true },
+                        flake8 = {
+                            enabled = true,
+                            maxLineLength = 88,
+                            extendIgnore = { "E203", "W503", "D102", "D107" },
+                        },
                         black = { enabled = true },
                         isort = { enabled = true },
                         pylint = { enabled = true },

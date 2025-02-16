@@ -1,6 +1,15 @@
 return {
     "tpope/vim-sensible", -- Sensible defaults
-    "tpope/vim-surround", -- Surround text objects
+    {
+        "echasnovski/mini.surround",
+        opts = {
+            mappings = {
+                add = "as",
+                delete = "ds", -- Delete surrounding
+                replace = "cs" -- Replace surrounding
+            },
+        },
+    },
     {
         'nvim-telescope/telescope.nvim',
         tag = '0.1.8',
