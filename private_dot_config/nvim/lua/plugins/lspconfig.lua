@@ -64,6 +64,10 @@ return {
                 vim.cmd "ClangdSwitchSourceHeader"
                 vim.cmd "vsplit" -- Open in a vertical split
             end, { buffer = bufnr, desc = "Switch source/header (vsplit)" })
+            if client.server_capabilities.inlayHintProvider then
+                vim.g.inlay_hints_visible = true
+                vim.lsp.inlay_hint.enable(true)
+            end
         end
 
         local capabilities = vim.lsp.protocol.make_client_capabilities()
