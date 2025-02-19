@@ -3,6 +3,7 @@ return {
     "neovim/nvim-lspconfig", -- LSP configuration
     config = function()
         local lspconfig = require("lspconfig")
+        local cfg = require("lspconfig.configs")
         local on_attach = function(client, bufnr)
             local function make_opts(desc)
                 return { noremap = true, silent = true, buffer = bufnr, desc = desc }
@@ -132,5 +133,6 @@ return {
             },
             on_attach = on_attach
         }
+        lspconfig.cmake.setup({})
     end
 }
