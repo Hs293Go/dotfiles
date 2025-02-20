@@ -29,20 +29,6 @@ return {
                 })
             end
 
-            vim.api.nvim_create_autocmd("BufWritePre", {
-                pattern = { "*.ts", "*.tsx", "*.js", "*.jsx", "*.py" }, -- Adjust file types as needed
-                callback = function()
-                    -- Trigger the "organize imports" code action
-                    vim.lsp.buf.code_action({
-                        apply = true, -- Apply the action immediately
-                        filter = filter_actions { "organize imports" },
-                        context = {
-                            only = { "source.organizeImports" }, -- Only organize imports actions
-                        },
-                    })
-                end,
-            })
-
             vim.keymap.set("n", "<F12>", vim.lsp.buf.definition, make_opts("Go to definition"))
             vim.keymap.set("n", "<M-S-F12>", vim.lsp.buf.type_definition, make_opts("Go to type definition"))
             vim.keymap.set("n", "<C-S-F12>", vim.lsp.buf.implementation, make_opts("Go to implementation"))
@@ -53,8 +39,18 @@ return {
             vim.keymap.set("v", "<leader>f", vim.lsp.buf.format, make_opts("Format selection"))
             vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, make_opts("Show code actions"))
             vim.keymap.set("v", "<C-.>", vim.lsp.buf.code_action, make_opts("Show code actions on selection"))
-            vim.api.nvim_create_autocmd("CursorHold", { callback = vim.lsp.buf.document_highlight })
+            -- The blow command will highlight the current variable and its usages in the buffer.
+            if client.server_capabilities.documentHighlightProvider then
 
+                local gid = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
+                vim.api.nvim_create_autocmd("CursorHold", {
+                    group = gid,
+                    buffer = bufnr,
+                    callback = function()
+                        vim.lsp.buf.document_highlight()
+                    end
+                })
+            end
             -- Statusline integration
             vim.opt.statusline:append("%{luaeval('vim.lsp.status()')}")
 
