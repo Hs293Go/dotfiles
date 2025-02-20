@@ -49,9 +49,10 @@ vim.keymap.set("n", "<C-/>", function()
   vim.cmd.norm('gcc')
 end)
 
-vim.keymap.set("v", "<C-/", function()
-  vim.cmd.norm('gc')
-end)
+vim.keymap.set("v", "<C-/>", "gc", {
+    remap = true
+})
+
 
 -- Keymaps for navigating diagnostics
 vim.keymap.set('n', '<F8>', function()
