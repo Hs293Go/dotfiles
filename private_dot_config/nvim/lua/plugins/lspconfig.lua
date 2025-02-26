@@ -104,6 +104,8 @@ return {
                         autopep8 = { enabled = false },
                         yapf = { enabled = false },
                         pyflakes = { enabled = false },
+                        mccabe = { enabled = false },
+                        pycodestyle = { enabled = false },
                     }
                 },
             },
