@@ -1,5 +1,4 @@
 return {
-	"tpope/vim-sensible", -- Sensible defaults
 	{
 		"echasnovski/mini.surround",
 		disable = true,
