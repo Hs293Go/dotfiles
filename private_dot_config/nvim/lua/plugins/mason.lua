@@ -2,7 +2,7 @@ return {
     "williamboman/mason.nvim",
     dependencies = {"williamboman/mason-lspconfig.nvim"},
     opts = {
-        ensure_installed =  {"cmakelang", "cmakelint"}
+        ensure_installed =  {"cmakelang", "cmakelint", "stylua", "shfmt"}
     },
     config = function()
         require("mason").setup()
