@@ -20,8 +20,8 @@ return {
 		opts = {},
         -- stylua: ignore
         keys = {
-            { "s" , false }, -- https://www.reddit.com/r/neovim/comments/177qsem/disable_flashnvim_default_mapping_in_lazyvim/
-            { "S" , false },
+            { "s" , mode = { "n", "x", "o" }, false }, -- https://www.reddit.com/r/neovim/comments/177qsem/disable_flashnvim_default_mapping_in_lazyvim/
+            { "S" , mode = { "n", "x", "o" }, false },
             { "gs", mode = { "n", "x", "o" }, function() require("flash").jump() end, desc = "Flash" },
             { "gS", mode = { "n", "x", "o" }, function() require("flash").treesitter() end, desc = "Flash Treesitter" },
             { "r", mode = "o", function() require("flash").remote() end, desc = "Remote Flash" },
