@@ -18,3 +18,5 @@ path+=("$VCPKG_ROOT"
 ld_library_path+=("/usr/local/cuda/lib64"
 )
 . "$HOME/.cargo/env"
+
+export EDITOR=nvim
