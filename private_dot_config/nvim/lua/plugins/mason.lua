@@ -2,7 +2,7 @@ return {
 	"williamboman/mason.nvim",
 	dependencies = { "williamboman/mason-lspconfig.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim" },
 	opts = {
-		ensure_installed = { "cmakelang", "cmakelint", "stylua", "shfmt" },
+		ensure_installed = { "cmakelang", "cmakelint", "stylua", "shfmt", "markdownlint-cli2" },
 	},
 	config = function()
 		require("mason").setup()
@@ -12,7 +12,7 @@ return {
 		})
 
 		require("mason-tool-installer").setup({
-			ensure_installed = { "cmakelang", "cmakelint", "stylua", "shfmt" },
+			ensure_installed = { "cmakelang", "cmakelint", "stylua", "shfmt", "markdownlint-cli2" },
 			auto_update = true,
 			run_on_start = true,
 		})
