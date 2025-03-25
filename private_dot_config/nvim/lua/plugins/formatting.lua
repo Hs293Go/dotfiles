@@ -19,12 +19,22 @@ return {
 			async = false, -- not recommended to change
 			quiet = false, -- not recommended to change
 			lsp_format = "fallback", -- not recommended to change
+			format_on_save = {
+				timeout_ms = 3000,
+				lsp_fallback = true,
+			},
 		},
 		formatters_by_ft = {
 			lua = { "stylua" },
 			sh = { "shfmt" },
 			cmake = { "cmake_format" },
-            md = { "markdownlint-cli2" },
+			md = { "markdownlint-cli2" },
+			tex = { "latexindent" },
+			python = { "black", lsp_format = "prefer" },
+			cpp = { "clang-format", lsp_format = "prefer" },
+			json = { "prettier" },
+			xml = { "prettier" },
+			yaml = { "prettier" },
 		},
 		-- The options you set here will be merged with the builtin formatters.
 		-- You can also define any custom formatters here.

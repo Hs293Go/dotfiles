@@ -20,23 +20,12 @@ return {
             end
 
             -- Other LSP keymaps can be added here
-            if client.supports_method("textDocument/formatting") then
-                vim.api.nvim_create_autocmd("BufWritePre", {
-                    buffer = bufnr,
-                    callback = function()
-                        vim.lsp.buf.format({ async = false })
-                    end,
-                })
-            end
-
             vim.keymap.set("n", "<F12>", vim.lsp.buf.definition, make_opts("Go to definition"))
             vim.keymap.set("n", "<M-S-F12>", vim.lsp.buf.type_definition, make_opts("Go to type definition"))
             vim.keymap.set("n", "<C-S-F12>", vim.lsp.buf.implementation, make_opts("Go to implementation"))
             vim.keymap.set("n", "<S-F12>", vim.lsp.buf.references, make_opts("Find references"))
             vim.keymap.set("n", "K", vim.lsp.buf.hover, make_opts("Show hover information"))
             vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, make_opts("Rename variable"))
-            vim.keymap.set("n", "<leader>f", vim.lsp.buf.format, make_opts("Format document"))
-            vim.keymap.set("v", "<leader>f", vim.lsp.buf.format, make_opts("Format selection"))
             vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, make_opts("Show code actions"))
             vim.keymap.set("v", "<C-.>", vim.lsp.buf.code_action, make_opts("Show code actions on selection"))
             -- The blow command will highlight the current variable and its usages in the buffer.
