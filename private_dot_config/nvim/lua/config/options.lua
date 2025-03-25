@@ -1,9 +1,9 @@
 vim.g.lazyvim_cmp = "nvim-cmp"
 vim.opt.compatible = false -- disable compatibility to old-time vi
-vim.opt.showmatch = true   -- show matching
-vim.opt.ignorecase = true  -- case insensitive
-vim.opt.mouse = "v"        -- middle-click paste with
-vim.opt.hlsearch = true    -- highlight search
+vim.opt.showmatch = true -- show matching
+vim.opt.ignorecase = true -- case insensitive
+vim.opt.mouse = "v" -- middle-click paste with
+vim.opt.hlsearch = true -- highlight search
 
 vim.opt.tabstop = 4
 vim.opt.shiftwidth = 4
@@ -23,4 +23,3 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.cursorline = true
 vim.opt.ttyfast = true
 vim.opt.swapfile = false
-
