@@ -1,6 +1,8 @@
 let &t_TI = ""
 let &t_TE = ""
 
+""" Plugin Handling
+
 let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
 
 if empty(glob(data_dir . '/autoload/plug.vim'))
@@ -15,8 +17,11 @@ Plug 'tpope/vim-sensible'
 Plug 'sickill/vim-monokai'
 call plug#end()
 
-syntax on
 colorscheme monokai
+
+""" General Settings that can be copied EVERYWHERE
+
+syntax on
 set encoding=utf-8
 set number
 set noswapfile
@@ -25,20 +30,24 @@ set ignorecase
 set incsearch
 set noeb vb t_vb=
 set ts=4 sw=4 sts=4 expandtab
-au FileType cpp,c setlocal ts=2 sw=2 sts=2 expandtab
-au FileType python setlocal foldmethod=indent makeprg=python\ %
-au BufRead,BufNewFile *.launch set filetype=xml
-au BufRead,BufNewFile *.sdf set filetype=xml
 set backspace=indent,eol,start
-
 set signcolumn=yes
 
-let mapleader=" "
+au FileType cpp,c setlocal ts=2 sw=2 sts=2 expandtab
+au FileType python setlocal foldmethod=indent makeprg=python\ %
 
+let mapleader=" "
 let maplocalleader = " "
 
-"reload the .vimrc
-nmap <silent> <leader>rv :source ~/.vimrc<CR>
+filetype plugin indent on
+"
+" remap colon to semicolon in normal and visual mode, but not in insert mode
+nnoremap ; :
+vnoremap ; :
+nnoremap :: ;
+vnoremap :: ;
+nnoremap ! :!
+
 "show spaces
 nmap <silent> <leader>S :set nolist!<CR>
 "show line numbers
@@ -54,9 +63,6 @@ nmap <silent> gA ggvG$
 " https://stackoverflow.com/questions/4465095
 nmap <silent> <C-c> :bp\|bd #<CR>
 
-nnoremap <leader>a <C-a>
-nnoremap <leader>x <C-x>
-
 "Toggle folding
 inoremap <F9> <C-O>za
 nnoremap <F9> za
@@ -68,29 +74,7 @@ map <S-Tab> :bprev<CR>
 
 nmap <C-t> :tabnew<CR>
 
-" Maximize only this window"
-nmap <silent> <leader>m :only<CR>
-"vertical split tmux style
-nmap <silent> <C-a>" :bel :vne<CR>
-"horizontal split tmux style
-nmap <silent> <C-a>% :bel :new<CR>
-"close viewport buffer tmux style
-nmap <silent> <C-a>d :hid<CR>
-" }}}
+au BufRead,BufNewFile *.launch set filetype=xml
+au BufRead,BufNewFile *.sdf set filetype=xml
 
-" remap colon to semicolon in normal and visual mode, but not in insert mode
-nnoremap ; :
-vnoremap ; :
-nnoremap :: ;
-vnoremap :: ;
-nnoremap ! :!
-
-"Increment number (plus)
-nnoremap <C-p> <C-a>
-vnoremap <C-p> <C-a>
-"Decrement number (minus)
-nnoremap <C-m> <C-x>
-vnoremap <C-m> <C-x>
-
-filetype plugin indent on
 
