@@ -10,29 +10,9 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 
 endif
 
-let g:ale_disable_lsp = 1
-
-function! Cond(cond, ...)
-    let opts = get(a:000, 0, {})
-    return a:cond ? opts : extend(opts, { 'on': [], 'for': [] })
-endfunction
-
 call plug#begin()
-Plug 'github/copilot.vim'
 Plug 'tpope/vim-sensible'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-fugitive'
-Plug 'preservim/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'ryanoasis/vim-devicons'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'dense-analysis/ale'
-Plug 'lervag/vimtex', { 'for': 'tex' }
-Plug 'honza/vim-snippets'
-Plug 'ilyachur/cmake4vim'
 Plug 'sickill/vim-monokai'
-Plug 'junegunn/fzf', {'dir': '~/.fzf','do': './install --all'}
-Plug 'junegunn/fzf.vim'
 call plug#end()
 
 syntax on
@@ -47,11 +27,6 @@ set noeb vb t_vb=
 set ts=4 sw=4 sts=4 expandtab
 au FileType cpp,c setlocal ts=2 sw=2 sts=2 expandtab
 au FileType python setlocal foldmethod=indent makeprg=python\ %
-au FileType tex nnoremap <F5> <Plug>(vimtex-compile)
-au FileType cpp nnoremap <F5> <Plug>(CMake)
-au FileType cpp nnoremap <F7> <Plug>(CMakeBuild)
-au FileType cpp nnoremap <S-F5> <Plug>(CMakeRun)
-au FileType cpp nnoremap <C-S-F5> <Plug>(CTest)
 au BufRead,BufNewFile *.launch set filetype=xml
 au BufRead,BufNewFile *.sdf set filetype=xml
 set backspace=indent,eol,start
@@ -79,8 +54,6 @@ nmap <silent> gA ggvG$
 " https://stackoverflow.com/questions/4465095
 nmap <silent> <C-c> :bp\|bd #<CR>
 
-nmap <silent> <leader>E :NERDTree<CR>
-
 nnoremap <leader>a <C-a>
 nnoremap <leader>x <C-x>
 
@@ -89,9 +62,6 @@ inoremap <F9> <C-O>za
 nnoremap <F9> za
 onoremap <F9> <C-C>za
 vnoremap <F9> zf
-
-nnoremap <C-a> <C-w>
-tnoremap <C-a> <C-w>
 
 map <Tab> :bnext<CR>
 map <S-Tab> :bprev<CR>
@@ -124,38 +94,3 @@ vnoremap <C-m> <C-x>
 
 filetype plugin indent on
 
-hi Normal ctermbg=none
-hi NonText ctermbg=none
-hi SpellBad term=reverse ctermbg=52 gui=undercurl guisp=Red
-hi Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
-
-let g:airline_powerline_fonts = 1
-let g:airline_theme='molokai'
-let g:airline#extensions#ale#enabled = 1
-let g:ale_virtualtext_cursor = 'disabled'
-let g:ale_linters= {'python' : ['pylint', 'flake8'],
-            \ 'cpp' : ['cpplint', 'cppcheck']
-            \}
-let g:ale_fixers = { '*': ['remove_trailing_lines', 'trim_whitespace'],
-            \ 'python': ['isort'],
-            \ 'toml': ['prettier'],
-            \ 'cmake': ['cmakeformat'],
-            \ 'tex' : ['latexindent']
-            \}
-let g:ale_fix_on_save = 1
-let g:ale_python_flake8_options='--config ~/.flake8'
-let g:ale_python_pylint_options='--rcfile=~/.pylintrc'
-let g:ale_cmake_cmakeformat_executable='cmake-format'
-let g:ale_cpp_cpplint_options='--filter=-runtime/references'
-let g:ale_cpp_cppcheck_options='--inline-suppr'
-let g:ale_tex_latexindent_options='-g /dev/null'
-let g:ale_set_highlights = 1
-
-let g:cmake_build_dir = 'build'
-let g:cmake_compile_commands = 1
-
-let g:vimtex_view_general_viewer = 'okular'
-let g:vimtex_compiler_latexmk = {
-            \ 'build_dir' : 'build',
-            \ 'out_dir' : 'build',
-            \}
