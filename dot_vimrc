@@ -11,17 +11,6 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
 endif
 
 let g:ale_disable_lsp = 1
-let g:coc_global_extensions = ['coc-json',
-            \ 'coc-git',
-            \ 'coc-clangd',
-            \ 'coc-pyright',
-            \ 'coc-cmake',
-            \ 'coc-toml',
-            \ 'coc-vimtex',
-            \ 'coc-ltex',
-            \ 'coc-snippets']
-
-let g:coc_filetype_map = {'tex': 'latex'}
 
 function! Cond(cond, ...)
     let opts = get(a:000, 0, {})
@@ -37,7 +26,6 @@ Plug 'preservim/nerdtree' | Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'ryanoasis/vim-devicons'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'neoclide/coc.nvim', Cond(executable('node') && v:version > 801, {'branch': 'release'})
 Plug 'dense-analysis/ale'
 Plug 'lervag/vimtex', { 'for': 'tex' }
 Plug 'honza/vim-snippets'
@@ -45,7 +33,6 @@ Plug 'ilyachur/cmake4vim'
 Plug 'sickill/vim-monokai'
 Plug 'junegunn/fzf', {'dir': '~/.fzf','do': './install --all'}
 Plug 'junegunn/fzf.vim'
-Plug 'antoinemadec/coc-fzf'
 call plug#end()
 
 syntax on
@@ -70,7 +57,6 @@ au BufRead,BufNewFile *.sdf set filetype=xml
 set backspace=indent,eol,start
 
 set signcolumn=yes
-so ~/.coc_conf.vim
 
 let mapleader=" "
 
@@ -142,24 +128,6 @@ hi Normal ctermbg=none
 hi NonText ctermbg=none
 hi SpellBad term=reverse ctermbg=52 gui=undercurl guisp=Red
 hi Pmenu ctermfg=15 ctermbg=0 guifg=#ffffff guibg=#000000
-
-" Use <C-l> for trigger snippet expand.
-imap <C-e> <Plug>(coc-snippets-expand)
-
-" Use <C-j> for select text for visual placeholder of snippet.
-vmap <C-j> <Plug>(coc-snippets-select)
-
-" Use <C-j> for jump to next placeholder, it's default of coc.nvim
-let g:coc_snippet_next = '<c-j>'
-
-" Use <C-k> for jump to previous placeholder, it's default of coc.nvim
-let g:coc_snippet_prev = '<c-k>'
-
-" Use <C-j> for both expand and jump (make expand higher priority.)
-imap <C-j> <Plug>(coc-snippets-expand-jump)
-
-" Use <leader>x for convert visual selected code to snippet
-xmap <leader>x  <Plug>(coc-convert-snippet)
 
 let g:airline_powerline_fonts = 1
 let g:airline_theme='molokai'
