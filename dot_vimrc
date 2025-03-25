@@ -15,9 +15,23 @@ endif
 call plug#begin()
 Plug 'tpope/vim-sensible'
 Plug 'sickill/vim-monokai'
+Plug 'itchyny/lightline.vim'
+Plug 'sheerun/vim-polyglot'
+Plug 'andymass/vim-matchup'
 call plug#end()
 
+runtime macros/matchit.vim
+let g:matchup_matchparen_offscreen = {}
+
 colorscheme monokai
+
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ], [ 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ }
+
 
 """ General Settings that can be copied EVERYWHERE
 
@@ -32,6 +46,9 @@ set noeb vb t_vb=
 set ts=4 sw=4 sts=4 expandtab
 set backspace=indent,eol,start
 set signcolumn=yes
+set laststatus=2
+set foldmethod=syntax
+set foldlevel=99  " Don't fold by default
 
 au FileType cpp,c setlocal ts=2 sw=2 sts=2 expandtab
 au FileType python setlocal foldmethod=indent makeprg=python\ %
