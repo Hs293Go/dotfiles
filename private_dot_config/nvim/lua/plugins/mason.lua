@@ -25,7 +25,6 @@ return {
 				"cmakelint",
 				"stylua",
 				"shfmt",
-				"latexindent",
 				"markdownlint-cli2",
 				"prettier",
 			},
