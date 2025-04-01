@@ -33,7 +33,7 @@ return {
 			python = { "black", lsp_format = "prefer" },
 			cpp = { "clang-format", lsp_format = "prefer" },
 			json = { "prettier" },
-			xml = { "prettier" },
+			xml = { "xmllint" },
 			yaml = { "prettier" },
 		},
 		-- The options you set here will be merged with the builtin formatters.
