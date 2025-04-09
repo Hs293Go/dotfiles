@@ -31,6 +31,7 @@ return {
 			md = { "markdownlint-cli2" },
 			tex = { "latexindent" },
 			python = { "black", lsp_format = "prefer" },
+			c = { "clang-format", lsp_format = "prefer" },
 			cpp = { "clang-format", lsp_format = "prefer" },
 			json = { "prettier" },
 			xml = { "xmllint" },
