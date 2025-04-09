@@ -46,6 +46,9 @@ return {
 					ignore_errors = true,
 				},
 			},
+			latexindent = {
+				args = { "-g", "/dev/null" },
+			},
 		},
 	},
 }
