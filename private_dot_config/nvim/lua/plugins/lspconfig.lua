@@ -67,8 +67,8 @@ return {
 				"--background-index", -- Enable background indexing
 				"--clang-tidy", -- Enable clang-tidy
 				"--header-insertion=never", -- Disable header insertion
+				"--fallback-style=google", -- Fallback style for formatting
 			},
-			init_options = { fallbackFlags = { "-std=c++17" } },
 			on_attach = on_attach,
 			capabilities = capabilities,
 		})
