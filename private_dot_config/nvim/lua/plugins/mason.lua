@@ -15,8 +15,14 @@ return {
 	config = function()
 		require("mason").setup()
 		require("mason-lspconfig").setup({
-			ensure_installed = { "clangd", "texlab", "pylsp", "cmake" },
-			automatic_installation = true,
+			ensure_installed = {
+				"clangd",
+				"texlab",
+				"cmake",
+				"ruff",
+				"pyright",
+				"jedi_language_server@0.42.0",
+			},
 		})
 
 		require("mason-tool-installer").setup({

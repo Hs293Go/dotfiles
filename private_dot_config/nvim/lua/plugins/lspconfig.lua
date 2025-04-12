@@ -28,17 +28,7 @@ return {
 			vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, make_opts("Rename variable"))
 			vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, make_opts("Show code actions"))
 			vim.keymap.set("v", "<C-.>", vim.lsp.buf.code_action, make_opts("Show code actions on selection"))
-			-- The blow command will highlight the current variable and its usages in the buffer.
-			if client.server_capabilities.documentHighlightProvider then
-				local gid = vim.api.nvim_create_augroup("lsp_document_highlight", { clear = true })
-				vim.api.nvim_create_autocmd("CursorHold", {
-					group = gid,
-					buffer = bufnr,
-					callback = function()
-						vim.lsp.buf.document_highlight()
-					end,
-				})
-			end
+
 			-- Statusline integration
 			vim.opt.statusline:append("%{luaeval('vim.lsp.status()')}")
 
@@ -73,35 +63,51 @@ return {
 			capabilities = capabilities,
 		})
 
-		lspconfig.pylsp.setup({
+		lspconfig.ruff.setup({
+			on_attach = on_attach, -- Your custom on_attach, if any
+			capabilities = capabilities, -- Your custom capabilities (e.g., for nvim-cmp)
+			on_attach = function(client, bufnr_attached)
+				on_attach(client, bufnr_attached)
+				client.server_capabilities.hoverProvider = false
+				_ = client
+				-- Ruff automatic import organization.
+				LazyVim.format.register({
+					name = "ruff.organize_imports",
+					priority = 50, -- Smaller than Conform's 100.
+					primary = false, -- Conform is primary.
+					format = function(bufnr)
+						if bufnr == bufnr_attached then
+							vim.lsp.buf.code_action({
+								context = {
+									only = { "source.organizeImports" },
+									diagnostics = {},
+								},
+								apply = true,
+							})
+						end
+					end,
+					sources = function(_)
+						return { "ruff.organize_imports" } -- Dummy name.
+					end,
+				})
+			end,
+		})
+
+		lspconfig.pyright.setup({ on_attach = on_attach, capabilities = capabilities })
+
+		lspconfig.jedi_language_server.setup({
+			on_attach = on_attach,
+			capabilities = capabilities,
 			settings = {
-				pylsp = {
-					configurationSources = { "pylint" },
-					plugins = {
-						-- Mypy Type Checking
-						pylsp_mypy = {
-							enabled = true,
-							live_mode = true, -- Real-time checking
-							dmypy = true, -- Use daemon mode for speed
-						},
-						-- Linting and Formatting
-						flake8 = {
-							enabled = true,
-							maxLineLength = 88,
-							extendIgnore = { "E203", "W503", "D102", "D107" },
-						},
-						black = { enabled = true },
-						isort = { enabled = true },
-						pylint = { enabled = true },
-						autopep8 = { enabled = false },
-						yapf = { enabled = false },
-						pyflakes = { enabled = false },
-						mccabe = { enabled = false },
-						pycodestyle = { enabled = false },
-					},
+				jedi = {
+					completion = { enabled = false },
+					hover = { enabled = false },
+					references = { enabled = true },
+					rename = { enabled = true }, -- rename symbol
+					symbols = { enabled = false },
+					diagnostics = { enabled = false },
 				},
 			},
-			on_attach = on_attach,
 		})
 
 		lspconfig.texlab.setup({
