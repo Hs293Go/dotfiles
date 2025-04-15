@@ -22,6 +22,7 @@ return {
 				"ruff",
 				"pyright",
 				"jedi_language_server@0.42.0",
+				"rust_analyzer",
 			},
 		})
 
@@ -33,6 +34,7 @@ return {
 				"shfmt",
 				"markdownlint-cli2",
 				"prettier",
+				"rustfmt",
 			},
 			auto_update = true,
 			run_on_start = true,
