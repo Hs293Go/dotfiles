@@ -33,6 +33,7 @@ return {
 			python = { "black", lsp_format = "prefer" },
 			c = { "clang-format", lsp_format = "prefer" },
 			cpp = { "clang-format", lsp_format = "prefer" },
+			toml = { "taplo" },
 			json = { "prettier" },
 			xml = { "xmllint" },
 			yaml = { "prettier" },

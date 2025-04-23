@@ -42,6 +42,7 @@ return {
 					"latexindent",
 					version = "V3.19.1",
 				},
+				"taplo",
 			},
 			auto_update = true,
 			run_on_start = true,
