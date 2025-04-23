@@ -23,3 +23,4 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.cursorline = true
 vim.opt.ttyfast = true
 vim.opt.swapfile = false
+vim.opt.foldmethod = "syntax"
