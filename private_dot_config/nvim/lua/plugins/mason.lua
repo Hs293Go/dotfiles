@@ -30,11 +30,18 @@ return {
 			ensure_installed = {
 				"cmakelang",
 				"cmakelint",
-				"stylua",
+				{
+					"stylua",
+					version = "v2.0.1",
+				},
 				"shfmt",
 				"markdownlint-cli2",
 				"prettier",
 				"rustfmt",
+				{
+					"latexindent",
+					version = "V3.19.1",
+				},
 			},
 			auto_update = true,
 			run_on_start = true,

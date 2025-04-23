@@ -28,7 +28,7 @@ return {
 			lua = { "stylua" },
 			sh = { "shfmt" },
 			cmake = { "cmake_format" },
-			md = { "markdownlint-cli2" },
+			md = { "prettier" },
 			tex = { "latexindent" },
 			python = { "black", lsp_format = "prefer" },
 			c = { "clang-format", lsp_format = "prefer" },
