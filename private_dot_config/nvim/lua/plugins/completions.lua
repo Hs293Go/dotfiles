@@ -27,7 +27,7 @@ return {
 					["<C-b>"] = cmp.mapping(cmp.mapping.scroll_docs(-4), { "i", "c" }),
 					["<C-f>"] = cmp.mapping(cmp.mapping.scroll_docs(4), { "i", "c" }),
 					-- coc-snippets's mapping for jumping to the next snippet's placeholder
-					["<C-j>"] = cmp.mapping(function(fallback)
+					["<C-S-j>"] = cmp.mapping(function(fallback)
 						if luasnip.expand_or_jumpable() then
 							luasnip.expand_or_jump()
 						else
@@ -35,7 +35,7 @@ return {
 						end
 					end, { "i", "s" }),
 					-- coc-snippets's mapping for jumping to the previous snippet's placeholder
-					["<C-k>"] = cmp.mapping(function(fallback)
+					["<C-S-k>"] = cmp.mapping(function(fallback)
 						if luasnip.jumpable(-1) then
 							luasnip.jump(-1)
 						else
