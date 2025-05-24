@@ -1,6 +1,10 @@
 return {
 	"williamboman/mason.nvim",
-	dependencies = { "williamboman/mason-lspconfig.nvim", "WhoIsSethDaniel/mason-tool-installer.nvim" },
+	version = "1.11.0",
+	dependencies = {
+		{ "williamboman/mason-lspconfig.nvim", version = "1.32.0" },
+		"WhoIsSethDaniel/mason-tool-installer.nvim",
+	},
 	opts = {
 		ensure_installed = {
 			"cmakelang",
