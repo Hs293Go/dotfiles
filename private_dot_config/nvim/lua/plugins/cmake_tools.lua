@@ -30,8 +30,25 @@ return {
 			silent = true,
 		})
 
-		vim.api.nvim_set_keymap("n", "<leader>Cx", ":CMakeStopExecutor<CR>", {
+		vim.api.nvim_set_keymap("n", "<leader>Cd", ":CMakeDebug<CR>", {
+			desc = "Debug CMake target",
+			noremap = true,
+			silent = true,
+		})
+
+		vim.api.nvim_set_keymap("n", "<leader>Cr", ":CMakeRun<CR>", {
+			desc = "Run CMake target",
+			noremap = true,
+			silent = true,
+		})
+
+		vim.api.nvim_set_keymap("n", "<leader>Cxe", ":CMakeStopExecutor<CR>", {
 			desc = "Stop CMake Executor",
+			noremap = true,
+			silent = true,
+		})
+		vim.api.nvim_set_keymap("n", "<leader>Cxr", ":CMakeStopRunner<CR>", {
+			desc = "Stop CMake Runner",
 			noremap = true,
 			silent = true,
 		})
@@ -50,6 +67,18 @@ return {
 
 		vim.api.nvim_set_keymap("n", "<leader>Csb", ":CMakeSelectBuildType<CR>", {
 			desc = "Select CMake build type",
+			noremap = true,
+			silent = true,
+		})
+
+		vim.api.nvim_set_keymap("n", "<leader>Cst", ":CMakeSelectBuildTarget<CR>", {
+			desc = "Select CMake build target",
+			noremap = true,
+			silent = true,
+		})
+
+		vim.api.nvim_set_keymap("n", "<leader>Csl", ":CMakeSelectLaunchTarget<CR>", {
+			desc = "Select CMake launch target",
 			noremap = true,
 			silent = true,
 		})
