@@ -95,21 +95,6 @@ return {
 
 		lspconfig.pyright.setup({ on_attach = on_attach, capabilities = capabilities })
 
-		lspconfig.jedi_language_server.setup({
-			on_attach = on_attach,
-			capabilities = capabilities,
-			settings = {
-				jedi = {
-					completion = { enabled = false },
-					hover = { enabled = false },
-					references = { enabled = true },
-					rename = { enabled = true }, -- rename symbol
-					symbols = { enabled = false },
-					diagnostics = { enabled = false },
-				},
-			},
-		})
-
 		lspconfig.texlab.setup({
 			settings = {
 				texlab = {
@@ -138,7 +123,11 @@ return {
 				on_attach = on_attach,
 				default_settings = {
 					-- rust-analyzer language server configuration
-					["rust-analyzer"] = {},
+					["rust-analyzer"] = {
+						cargo = {
+							features = "all",
+						},
+					},
 				},
 			},
 			-- DAP configuration
