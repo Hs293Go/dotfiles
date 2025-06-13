@@ -2,7 +2,7 @@
 	email = hellston20a@gmail.com
 	name = Hs293Go
 [core]
-	editor = vim
+	editor = nvim
 	excludesFile = ~/.gitignore
 	attributesfile = ~/.gitattributes
 [credential]
