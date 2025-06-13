@@ -147,3 +147,8 @@ command -v direnv > /dev/null 2>&1 && eval "$(direnv hook zsh)"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 export DIRENV_LOG_FORMAT=
+
+# Added by Nix installer
+if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
+  . ~/.nix-profile/etc/profile.d/nix.sh
+fi
