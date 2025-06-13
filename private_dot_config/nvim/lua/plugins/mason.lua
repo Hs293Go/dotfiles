@@ -14,6 +14,7 @@ return {
 			"latexindent",
 			"markdownlint-cli2",
 			"prettier",
+			"tree-sitter-cli",
 		},
 	},
 	config = function()
@@ -34,6 +35,7 @@ return {
 			ensure_installed = {
 				"cmakelang",
 				"cmakelint",
+				"tree-sitter-cli",
 				{
 					"stylua",
 					version = "v2.0.1",
