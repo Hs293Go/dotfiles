@@ -12,3 +12,5 @@ ld_library_path+=("/usr/local/cuda/lib64"
 . "$HOME/.cargo/env"
 
 export EDITOR=nvim
+
+if [ -e /home/hs293go/.nix-profile/etc/profile.d/nix.sh ]; then . /home/hs293go/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
