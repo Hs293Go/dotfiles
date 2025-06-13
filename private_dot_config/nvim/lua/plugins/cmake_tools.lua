@@ -1,11 +1,11 @@
 return {
 	"Civitasv/cmake-tools.nvim",
+	lazy = true,
+	opts = {},
 	config = function()
 		local cmake_tools = require("cmake-tools")
 		cmake_tools.setup({
-			opts = {
-				cmake_generate_options = { "-D", "CMAKE_EXPORT_COMPILE_COMMANDS=1" },
-			},
+			cmake_build_directory = "build",
 		})
 		vim.api.nvim_set_keymap("n", "<F7>", ":CMakeBuild<CR>", {
 			noremap = true,
