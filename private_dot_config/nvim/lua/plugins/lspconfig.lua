@@ -1,6 +1,13 @@
 return {
 
 	"neovim/nvim-lspconfig", -- LSP configuration
+	dependencies = {
+		{
+			"mrcjkb/rustaceanvim", -- Rust LSP and DAP support
+			version = "^6",
+			lazy = false,
+		},
+	},
 	config = function()
 		local lspconfig = require("lspconfig")
 		local cfg = require("lspconfig.configs")
