@@ -19,13 +19,16 @@
   # environment.
   home.packages = with pkgs; [
     # Build and dev tools: C++
-    cmake ninja clang-tools gdb
+    ninja clang-tools gdb ccache
+
+    # Build and dev tools: python
+    pipx
     
     # Editors
     neovim
 
     # Shell QOL 
-    fd ripgrep bat fzf tldr thefuck
+    fd ripgrep bat fzf tldr 
 
     # Fonts
     nerd-fonts.fira-code
