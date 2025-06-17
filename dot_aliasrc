@@ -82,17 +82,30 @@ if [ ! -z ${ROS_VERSION+x} ] ; then
         alias rbra='rosbag record --all'
         alias rbi='rosbag info'
 
-        _apt_pref=${apt_pref:-apt}
-
-        rin() {
-            sudo $_apt_pref install -y --no-install-recommends ros-$ROS_DISTRO-$1
-        }
-
-        rrm() {
-            sudo $_apt_pref remove ros-$ROS_DISTRO-$1
-        }
     else
-        :
-        # WIP: We are not using ROS 2 yet...
+
+        alias rlch='ros2 launch'
+        alias rrun='ros2 run'
+
+        alias rn='ros2 node list'
+        alias rni='ros2 node info'
+        alias rpf='ros2 pkg prefix'
+        alias rpl='ros2 pkg list'
+        alias rsarg='ros2 service args'
+
+        alias rsc='ros2 service call'
+        alias rsf='ros2 service find'
+        alias rsi='ros2 service info'
+        alias rsl='ros2 service list'
+        alias rst='ros2 service type'
+
+        alias rte='ros2 topic echo'
+        alias rtf='ros2 topic find'
+        alias rti='ros2 topic info'
+        alias rth='ros2 topic hz'
+        alias rtl='ros2 topic list'
+        alias rtt='ros2 topic type'
+        alias rtp='ros2 topic pub'
+
     fi
 fi
