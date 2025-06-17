@@ -15,6 +15,7 @@ return {
 			"markdownlint-cli2",
 			"prettier",
 			"tree-sitter-cli",
+			"cmake-language-server",
 		},
 	},
 	config = function()
@@ -33,6 +34,7 @@ return {
 
 		require("mason-tool-installer").setup({
 			ensure_installed = {
+				"cmake-language-server",
 				"cmakelang",
 				"cmakelint",
 				"tree-sitter-cli",
