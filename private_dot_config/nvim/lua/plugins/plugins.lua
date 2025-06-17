@@ -29,26 +29,4 @@ return {
             { "<c-s>", mode = { "c" }, function() require("flash").toggle() end, desc = "Toggle Flash Search" },
         },
 	},
-	{
-		"nvimtools/none-ls.nvim",
-		event = "LazyFile",
-		dependencies = { "mason.nvim" },
-		opts = function(_, opts)
-			local nls = require("null-ls")
-			opts.root_dir = opts.root_dir
-				or require("null-ls.utils").root_pattern(".null-ls-root", ".neoconf.json", "Makefile", ".git")
-			opts.sources = vim.list_extend(opts.sources or {}, {
-				nls.builtins.code_actions.refactoring,
-			})
-		end,
-	},
-	{
-		"ThePrimeagen/refactoring.nvim",
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-			"nvim-treesitter/nvim-treesitter",
-		},
-		lazy = false,
-		opts = {},
-	},
 }
