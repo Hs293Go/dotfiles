@@ -19,26 +19,126 @@
   # environment.
   home.packages = with pkgs; [
     # Build and dev tools: C++
-    ninja clang-tools gdb ccache
+    ninja
+    clang-tools
+    gdb
+    ccache
 
     # Build and dev tools: python
     pipx
-    
+
     # Editors
     neovim
 
     # Shell QOL 
-    fd ripgrep bat fzf tldr 
+    fd
+    ripgrep
+    bat
+    fzf
+    tldr
 
     # Fonts
+    pkgs.zsh-powerlevel10k
     nerd-fonts.fira-code
 
     xclip
+    direnv
+
+    nodejs_22
+
+    lazygit
+
   ];
+
+  programs.zsh = {
+    enable = true;
+    enableCompletion = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    dotDir = ".config/zsh";
+
+    initContent = ''
+      source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme;
+      if [ -e ~/.nix-profile/etc/profile.d/nix.sh ]; then
+        . ~/.nix-profile/etc/profile.d/nix.sh
+      fi
+
+      source ~/.p10k.zsh
+
+      source ${pkgs.fzf}/share/fzf/key-bindings.zsh
+      source ${pkgs.fzf}/share/fzf/completion.zsh
+
+
+      if [ $TERM = "xterm-kitty" ] ; then
+        alias ssh='kitty +kitten ssh'
+      fi
+    '';
+    envExtra = ''
+      # Bootstrap logic managed by you
+      [ -f "$HOME/.nix-profile/etc/profile.d/nix.sh" ] && source "$HOME/.nix-profile/etc/profile.d/nix.sh"
+      [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+    '';
+    plugins = [
+      {
+        name = "zsh-vi-mode";
+        src = pkgs.zsh-vi-mode;
+      }
+      {
+        name = "enhancd";
+        src = pkgs.fetchFromGitHub {
+          owner = "babarot";
+          repo = "enhancd";
+          rev = "main";
+          sha256 = "09wa6s36xlyzbakgqadcjk4g2rzinp2l3irn8ikagl445b11p954";
+        };
+        file = "init.sh";
+      }
+      {
+        name = "omz-git";
+        src = pkgs.fetchFromGitHub {
+          owner = "ohmyzsh";
+          repo = "ohmyzsh";
+          rev = "master";
+          sha256 = "0wwwh5h15gwk68k30wh4bnyy7wbz9v80khgf86gql0gmipzm5038";
+        };
+        file = "plugins/git/git.plugin.zsh";
+      }
+      {
+        name = "omz-debian";
+        src = pkgs.fetchFromGitHub {
+          owner = "ohmyzsh";
+          repo = "ohmyzsh";
+          rev = "master";
+          sha256 = "0wwwh5h15gwk68k30wh4bnyy7wbz9v80khgf86gql0gmipzm5038";
+        };
+        file = "plugins/debian/debian.plugin.zsh";
+      }
+    ];
+
+  };
+
+  programs.fzf = { enable = true; };
+
+  programs.direnv = {
+    enable = true;
+    enableZshIntegration =
+      true; # or enableBashIntegration / enableFishIntegration
+    silent = true;
+  };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
   home.file = {
+    ".p10k.zsh".source = ./dotfiles/p10k.zsh;
+    ".prettierrc".source = ./dotfiles/prettierrc;
+    ".gitignore".source = ./dotfiles/gitignore;
+    ".gitconfig".source = ./dotfiles/gitconfig;
+    ".vimrc".source = ./dotfiles/vimrc;
+    "latexindent".source = ./dotfiles/latexindent.yaml;
+    ".indentconfig.yaml".source = ./dotfiles/indentconfig.yaml;
+    ".config/kitty/kitty.conf".source = ./dotfiles/kitty.conf;
+    ".ipython/profile_default/ipython_config.py".source =
+      ./dotfiles/ipython/profile_default/ipython_config.py;
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
@@ -68,7 +168,28 @@
   #  /etc/profiles/per-user/hs293go/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-    # EDITOR = "emacs";
+    EDITOR = "nvim";
+    PATH = "$HOME/.local/bin:/usr/local/cuda/bin:$PATH";
+    LD_LIBRARY_PATH = "/usr/local/cuda/lib64:$LD_LIBRARY_PATH";
+  };
+
+  home.shellAliases = {
+    so = "source";
+    sc = "exec $SHELL";
+    cls = "clear";
+    ll = "ls -l";
+    la = "ls -la";
+    l = "ls -CF";
+    md = "mkdir -p";
+    hm = "home-manager";
+    hmb = "home-manager build";
+    hms = "home-manager switch";
+    fdf = "fd -t f";
+    fdd = "fd -t d";
+    fdr = "fda -uI --follow";
+    ffd = "fd -F";
+    xc = "xclip -selection clipboard";
+    nv = "nvim";
   };
 
   # Let Home Manager install and manage itself.

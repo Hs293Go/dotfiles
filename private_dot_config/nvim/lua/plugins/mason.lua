@@ -46,6 +46,7 @@ return {
 				"markdownlint-cli2",
 				"prettier",
 				"rustfmt",
+				"nixfmt",
 				{
 					"latexindent",
 					version = "V3.19.1",
