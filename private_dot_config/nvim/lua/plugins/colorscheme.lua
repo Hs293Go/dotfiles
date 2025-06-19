@@ -50,6 +50,7 @@ return {
 					["@keyword.function"] = { fg = colors.blue },
 
 					-- Strings, including doc comments
+					String = { fg = colors.yellow },
 					["@string"] = { fg = colors.yellow },
 
 					-- All variables are white
