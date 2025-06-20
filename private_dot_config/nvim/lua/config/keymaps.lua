@@ -3,11 +3,6 @@ vim.api.nvim_set_keymap("v", ";", ":", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "::", ";", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "::", ";", { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("i", "<F9>", "<C-O>za", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<F9>", "za", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("o", "<F9>", "<C-C>za", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("v", "<F9>", "zf", { noremap = true, silent = true })
-
 vim.api.nvim_set_keymap("n", "<Tab>", ":bnext<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":bprev<CR>", { noremap = true, silent = true })
 
