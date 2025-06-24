@@ -1,6 +1,14 @@
 { config, pkgs, ... }:
 
-{
+let
+  tex = pkgs.texlive.combine {
+    inherit (pkgs.texlive)
+      scheme-medium latexmk collection-latex collection-latexextra
+      collection-latexrecommended collection-bibtexextra collection-luatex
+      collection-langcjk collection-publishers collection-fontsrecommended
+      collection-fontsextra;
+  };
+in {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "hs293go";
@@ -48,6 +56,7 @@
 
     lazygit
 
+    tex
   ];
 
   programs.zsh = {
