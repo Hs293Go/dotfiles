@@ -81,6 +81,11 @@ in {
       if [ $TERM = "xterm-kitty" ] ; then
         alias ssh='kitty +kitten ssh'
       fi
+
+      ros_setup_scripts=(/opt/ros/*/setup.zsh)
+      if [ "''${#ros_setup_scripts[@]}" -eq 1 ] ; then
+        source "''${ros_setup_scripts[@]:0:1}"
+      fi
     '';
     envExtra = ''
       # Bootstrap logic managed by you
