@@ -150,7 +150,7 @@ in {
     ".gitignore".source = ./dotfiles/gitignore;
     ".gitconfig".source = ./dotfiles/gitconfig;
     ".vimrc".source = ./dotfiles/vimrc;
-    "latexindent".source = ./dotfiles/latexindent.yaml;
+    "latexindent.yaml".source = ./dotfiles/latexindent.yaml;
     ".indentconfig.yaml".source = ./dotfiles/indentconfig.yaml;
     ".config/kitty/kitty.conf".source = ./dotfiles/kitty.conf;
     ".ipython/profile_default/ipython_config.py".source =
