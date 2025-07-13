@@ -57,6 +57,8 @@ in {
     lazygit
 
     tex
+
+    nmap
   ];
 
   programs.zsh = {
