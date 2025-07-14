@@ -45,9 +45,6 @@ return {
 					["<Tab>"] = cmp.mapping(function(fallback)
 						if cmp.visible() then
 							cmp.select_next_item()
-						elseif suggestion.is_visible() then
-							-- Also accept copilot suggestions when there's no completion menu
-							suggestion.accept()
 						else
 							fallback()
 						end
