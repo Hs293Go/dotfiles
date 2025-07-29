@@ -1,8 +1,14 @@
 { config, pkgs, ... }:
 
 let
-  tex = pkgs.texlive.combine {
-    inherit (pkgs.texlive)
+  tl-pinned = import (fetchTarball {
+    url =
+      "https://github.com/NixOS/nixpkgs/archive/63dacb46bf939521bdc93981b4cbb7ecb58427a0.tar.gz";
+    sha256 = "1lr1h35prqkd1mkmzriwlpvxcb34kmhc9dnr48gkm8hh089hifmx";
+  }) { };
+  tl = tl-pinned.texlive;
+  tex = tl.combine {
+    inherit (tl)
       scheme-medium latexmk collection-latex collection-latexextra
       collection-latexrecommended collection-bibtexextra collection-luatex
       collection-langcjk collection-publishers collection-fontsrecommended
