@@ -1,5 +1,5 @@
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "cpp", "c" },
+	pattern = { "cpp", "c", "cuda" },
 	command = "setlocal ts=2 sw=2 sts=2 expandtab",
 })
 
