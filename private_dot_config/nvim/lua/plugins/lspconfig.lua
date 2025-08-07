@@ -118,7 +118,10 @@ return {
 					},
 				},
 			},
-			on_attach = on_attach,
+			on_attach = function(c, b)
+				on_attach(c, b)
+				vim.lsp.inlay_hint.enable(false) -- Enable inlay hints
+			end,
 		})
 		lspconfig.cmake.setup({})
 
