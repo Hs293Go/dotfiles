@@ -27,11 +27,13 @@ return {
 			end
 
 			-- Other LSP keymaps can be added here
-			vim.keymap.set("n", "<F12>", vim.lsp.buf.definition, make_opts("Go to definition"))
-			vim.keymap.set("n", "<M-S-F12>", vim.lsp.buf.type_definition, make_opts("Go to type definition"))
-			vim.keymap.set("n", "<C-S-F12>", vim.lsp.buf.implementation, make_opts("Go to implementation"))
-			vim.keymap.set("n", "<S-F12>", vim.lsp.buf.references, make_opts("Find references"))
-			vim.keymap.set("n", "K", vim.lsp.buf.hover, make_opts("Show hover information"))
+			vim.keymap.set("n", "gd", vim.lsp.buf.definition, make_opts("LSP go to definition"))
+			vim.keymap.set("n", "ge", vim.diagnostic.open_float, make_opts("Show line diagnostics"))
+			vim.keymap.set("n", "glt", vim.lsp.buf.type_definition, make_opts("LSP go to type definition"))
+			vim.keymap.set("n", "glr", vim.lsp.buf.references, make_opts("LSP find references"))
+			vim.keymap.set("n", "glD", vim.lsp.buf.implementation, make_opts("LSP go to implementation"))
+			vim.keymap.set("n", "glo", vim.lsp.buf.document_symbol, make_opts("LSP document symbols"))
+			vim.keymap.set("n", "glW", vim.lsp.buf.workspace_symbol, make_opts("LSP workspace symbols"))
 			vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, make_opts("Rename variable"))
 			vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, make_opts("Show code actions"))
 			vim.keymap.set("v", "<C-.>", vim.lsp.buf.code_action, make_opts("Show code actions on selection"))
@@ -54,6 +56,8 @@ return {
 				vim.g.inlay_hints_visible = true
 				vim.lsp.inlay_hint.enable(true)
 			end
+
+			vim.diagnostic.config({ virtual_text = true, signs = true, underline = true })
 		end
 
 		local capabilities = vim.lsp.protocol.make_client_capabilities()

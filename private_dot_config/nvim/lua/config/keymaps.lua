@@ -33,12 +33,3 @@ end)
 vim.keymap.set("v", "<C-/>", "gc", {
 	remap = true,
 })
-
--- Keymaps for navigating diagnostics
-vim.keymap.set("n", "<F8>", function()
-	vim.diagnostic.goto_next() -- Jump to the next diagnostic
-end, { desc = "Go to next diagnostic" })
-
-vim.keymap.set("n", "<S-F8>", function()
-	vim.diagnostic.goto_prev() -- Jump to the previous diagnostic
-end, { desc = "Go to previous diagnostic" })
