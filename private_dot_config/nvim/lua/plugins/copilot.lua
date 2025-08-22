@@ -17,6 +17,7 @@ return {
 				},
 				filetypes = {
 					tex = true,
+					markdown = true,
 				},
 			})
 		end,
