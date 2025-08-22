@@ -1,4 +1,3 @@
-vim.g.lazyvim_cmp = "nvim-cmp"
 vim.opt.compatible = false -- disable compatibility to old-time vi
 vim.opt.showmatch = true -- show matching
 vim.opt.ignorecase = true -- case insensitive
