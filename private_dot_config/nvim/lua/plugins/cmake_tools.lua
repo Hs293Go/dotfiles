@@ -1,5 +1,9 @@
 return {
 	"Civitasv/cmake-tools.nvim",
+	ft = { "cmake", "cmake.in", "CMakeLists.txt", "cpp", "c", "h", "hpp" },
+	requires = {
+		"folke/which-key.nvim",
+	},
 	lazy = true,
 	opts = {},
 	config = function()
@@ -7,80 +11,69 @@ return {
 		cmake_tools.setup({
 			cmake_build_directory = "build",
 		})
-		vim.api.nvim_set_keymap("n", "<F7>", ":CMakeBuild<CR>", {
-			noremap = true,
-			silent = true,
-		})
-
-		vim.api.nvim_set_keymap("n", "<leader>Cg", ":CMakeBuild<CR>", {
-			desc = "Generate CMake project",
-			noremap = true,
-			silent = true,
-		})
-
-		vim.api.nvim_set_keymap("n", "<leader>Cb", ":CMakeBuild<CR>", {
-			desc = "Build CMake project",
-			noremap = true,
-			silent = true,
-		})
-
-		vim.api.nvim_set_keymap("n", "<leader>Ci", ":CMakeInstall<CR>", {
-			desc = "Install CMake project",
-			noremap = true,
-			silent = true,
-		})
-
-		vim.api.nvim_set_keymap("n", "<leader>Cd", ":CMakeDebug<CR>", {
-			desc = "Debug CMake target",
-			noremap = true,
-			silent = true,
-		})
-
-		vim.api.nvim_set_keymap("n", "<leader>Cr", ":CMakeRun<CR>", {
-			desc = "Run CMake target",
-			noremap = true,
-			silent = true,
-		})
-
-		vim.api.nvim_set_keymap("n", "<leader>Cxe", ":CMakeStopExecutor<CR>", {
-			desc = "Stop CMake Executor",
-			noremap = true,
-			silent = true,
-		})
-		vim.api.nvim_set_keymap("n", "<leader>Cxr", ":CMakeStopRunner<CR>", {
-			desc = "Stop CMake Runner",
-			noremap = true,
-			silent = true,
-		})
-
-		vim.api.nvim_set_keymap("n", "<leader>Csc", ":CMakeSelectBuildPreset<CR>", {
-			desc = "Select CMake configure preset",
-			noremap = true,
-			silent = true,
-		})
-
-		vim.api.nvim_set_keymap("n", "<leader>Csp", ":CMakeSelectBuildPreset<CR>", {
-			desc = "Select CMake build preset",
-			noremap = true,
-			silent = true,
-		})
-
-		vim.api.nvim_set_keymap("n", "<leader>Csb", ":CMakeSelectBuildType<CR>", {
-			desc = "Select CMake build type",
-			noremap = true,
-			silent = true,
-		})
-
-		vim.api.nvim_set_keymap("n", "<leader>Cst", ":CMakeSelectBuildTarget<CR>", {
-			desc = "Select CMake build target",
-			noremap = true,
-			silent = true,
-		})
-
-		vim.api.nvim_set_keymap("n", "<leader>Csl", ":CMakeSelectLaunchTarget<CR>", {
-			desc = "Select CMake launch target",
-			noremap = true,
-			silent = true,
+		local wk = require("which-key")
+		wk.add({
+			{ "<leader>C", group = "CMake Tools" },
+			{
+				"<leader>Cg",
+				":CMakeBuild<CR>",
+				desc = "Generate CMake project",
+			},
+			{
+				"<leader>Cb",
+				":CMakeBuild<CR>",
+				desc = "Build CMake project",
+			},
+			{
+				"<leader>Ci",
+				":CMakeInstall<CR>",
+				desc = "Install CMake project",
+			},
+			{
+				"<leader>Cd",
+				":CMakeDebug<CR>",
+				desc = "Debug CMake target",
+			},
+			{
+				"<leader>Cr",
+				":CMakeRun<CR>",
+				desc = "Run CMake target",
+			},
+			{
+				"<leader>Cxe",
+				":CMakeStopExecutor<CR>",
+				desc = "Stop CMake Executor",
+			},
+			{
+				"<leader>Cxr",
+				":CMakeStopRunner<CR>",
+				desc = "Stop CMake Runner",
+			},
+			{
+				"<leader>Csc",
+				":CMakeSelectBuildPreset<CR>",
+				desc = "Select CMake configure preset",
+			},
+			{
+				"<leader>Csp",
+				":CMakeSelectBuildPreset<CR>",
+				desc = "Select CMake build preset",
+			},
+			{
+				"<leader>Csb",
+				":CMakeSelectBuildType<CR>",
+				desc = "Select CMake build type",
+			},
+			{
+				"<leader>Cst",
+				":CMakeSelectBuildTarget<CR>",
+				desc = "Select CMake build target",
+			},
+			{
+				"<leader>Csl",
+				":CMakeSelectLaunchTarget<CR>",
+				desc = "Select CMake launch target",
+			},
 		})
 	end,
 }

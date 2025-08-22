@@ -1,5 +1,8 @@
 return {
 	"lervag/vimtex",
+	requires = {
+		"folke/which-key.nvim",
+	},
 	ft = "tex", -- Only load for .tex files
 	lazy = false,
 	config = function()
@@ -13,43 +16,39 @@ return {
 		vim.g.vimtex_complete_close_braces = 1 -- Automatically close braces
 		vim.g.vimtex_complete_ignore_case = 1 -- Ignore case in completions
 		vim.g.vimtex_complete_smart_case = 1 -- Smart case sensitivity
-		vim.api.nvim_set_keymap(
-			"n",
-			"<leader>Tcc",
-			":VimtexCompile<CR>",
-			{ noremap = true, silent = true, desc = "Compile LaTeX with Vimtex" }
-		)
-		vim.api.nvim_set_keymap(
-			"n",
-			"<leader>Tcl",
-			":VimtexClean<CR>",
-			{ noremap = true, silent = true, desc = "Clean LaTeX with Vimtex" }
-		)
-		vim.api.nvim_set_keymap(
-			"n",
-			"<leader>Tcv",
-			":VimtexView<CR>",
-			{ noremap = true, silent = true, desc = "View PDF with Vimtex" }
-		)
-
-		vim.api.nvim_set_keymap(
-			"n",
-			"<leader>Twc",
-			":VimtexCountWords<CR>",
-			{ noremap = true, silent = true, desc = "Count words with Vimtex" }
-		)
-		vim.api.nvim_set_keymap(
-			"n",
-			"<leader>Ti",
-			":VimtexInfo<CR>",
-			{ noremap = true, silent = true, desc = "Vimtex Information" }
-		)
-
-		vim.api.nvim_set_keymap(
-			"n",
-			"<leader>Te",
-			":VimtexErrors<CR>",
-			{ noremap = true, silent = true, desc = "Vimtex errors" }
-		)
+		local wk = require("which-key")
+		wk.add({
+			{ "<leader>T", group = "Vimtex" },
+			{
+				"<leader>Tcc",
+				":VimtexCompile<CR>",
+				desc = "Compile LaTeX with Vimtex",
+			},
+			{
+				"<leader>Tcl",
+				":VimtexClean<CR>",
+				desc = "Clean LaTeX with Vimtex",
+			},
+			{
+				"<leader>Tcv",
+				":VimtexView<CR>",
+				desc = "View PDF with Vimtex",
+			},
+			{
+				"<leader>Twc",
+				":VimtexCountWords<CR>",
+				desc = "Count words with Vimtex",
+			},
+			{
+				"<leader>Ti",
+				":VimtexInfo<CR>",
+				desc = "Vimtex Information",
+			},
+			{
+				"<leader>Te",
+				":VimtexErrors<CR>",
+				desc = "Vimtex errors",
+			},
+		})
 	end,
 }

@@ -7,6 +7,7 @@ return {
 			version = "^6",
 			lazy = false,
 		},
+		"folke/which-key.nvim", -- Keybinding helper
 	},
 	config = function()
 		local lspconfig = require("lspconfig")
@@ -29,11 +30,15 @@ return {
 			-- Other LSP keymaps can be added here
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, make_opts("LSP go to definition"))
 			vim.keymap.set("n", "ge", vim.diagnostic.open_float, make_opts("Show line diagnostics"))
-			vim.keymap.set("n", "glt", vim.lsp.buf.type_definition, make_opts("LSP go to type definition"))
-			vim.keymap.set("n", "glr", vim.lsp.buf.references, make_opts("LSP find references"))
-			vim.keymap.set("n", "glD", vim.lsp.buf.implementation, make_opts("LSP go to implementation"))
-			vim.keymap.set("n", "glo", vim.lsp.buf.document_symbol, make_opts("LSP document symbols"))
-			vim.keymap.set("n", "glW", vim.lsp.buf.workspace_symbol, make_opts("LSP workspace symbols"))
+			local wk = require("which-key")
+			wk.add({
+				{ "gl", group = "goto by LSP" },
+				{ "glt", vim.lsp.buf.type_definition, desc = "LSP go to type definition" },
+				{ "glr", vim.lsp.buf.references, desc = "LSP find references" },
+				{ "glD", vim.lsp.buf.implementation, desc = "LSP go to implementation" },
+				{ "glo", vim.lsp.buf.document_symbol, desc = "LSP document symbols" },
+				{ "glW", vim.lsp.buf.workspace_symbol, desc = "LSP workspace symbols" },
+			})
 			vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, make_opts("Rename variable"))
 			vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, make_opts("Show code actions"))
 			vim.keymap.set("v", "<C-.>", vim.lsp.buf.code_action, make_opts("Show code actions on selection"))
