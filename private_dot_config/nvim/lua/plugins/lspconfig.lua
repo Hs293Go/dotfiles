@@ -11,52 +11,57 @@ return {
 	},
 	config = function()
 		local lspconfig = require("lspconfig")
-		local cfg = require("lspconfig.configs")
 		local on_attach = function(client, bufnr)
 			local function make_opts(desc)
 				return { noremap = true, silent = true, buffer = bufnr, desc = desc }
 			end
 
-			local function filter_actions(key)
-				return function(action)
-					for _, k in ipairs(key) do
-						if action.title:lower():match(k) then
-							return true
-						end
-					end
-				end
-			end
-
 			-- Other LSP keymaps can be added here
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, make_opts("LSP go to definition"))
-			vim.keymap.set("n", "ge", vim.diagnostic.open_float, make_opts("Show line diagnostics"))
 			local wk = require("which-key")
 			wk.add({
-				{ "gl", group = "goto by LSP" },
-				{ "glt", vim.lsp.buf.type_definition, desc = "LSP go to type definition" },
-				{ "glr", vim.lsp.buf.references, desc = "LSP find references" },
-				{ "glD", vim.lsp.buf.implementation, desc = "LSP go to implementation" },
-				{ "glo", vim.lsp.buf.document_symbol, desc = "LSP document symbols" },
-				{ "glW", vim.lsp.buf.workspace_symbol, desc = "LSP workspace symbols" },
+				{ "gl", group = "LSP: goto" },
+				{
+					"glt",
+					vim.lsp.buf.type_definition,
+					desc = "LSP: Go to type definition",
+					buffer = bufnr,
+					noremap = true,
+				},
+				{ "glr", vim.lsp.buf.references, desc = "LSP: Go to references", buffer = bufnr, noremap = true },
+				{
+					"glD",
+					vim.lsp.buf.implementation,
+					desc = "LSP: Go to implementation",
+					buffer = bufnr,
+					noremap = true,
+				},
+				{
+					"glo",
+					vim.lsp.buf.document_symbol,
+					desc = "LSP: Go to document symbols",
+					buffer = bufnr,
+					noremap = true,
+				},
+				{
+					"glW",
+					vim.lsp.buf.workspace_symbol,
+					desc = "LSP: Go to workspace symbols",
+					buffer = bufnr,
+					noremap = true,
+				},
 			})
+
 			vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, make_opts("Rename variable"))
 			vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, make_opts("Show code actions"))
 			vim.keymap.set("v", "<C-.>", vim.lsp.buf.code_action, make_opts("Show code actions on selection"))
 
+			vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, make_opts("LSP: Rename variable"))
+			vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, make_opts("LSP: Show code actions"))
+
 			-- Statusline integration
 			vim.opt.statusline:append("%{luaeval('vim.lsp.status()')}")
 
-			-- Keybindings for switchSourceHeader
-			vim.keymap.set(
-				"n",
-				"<A-o>",
-				"<cmd>ClangdSwitchSourceHeader<cr>",
-				{ buffer = bufnr, desc = "Switch source/header" }
-			)
-			vim.keymap.set("n", "<leader>V", function()
-				vim.cmd("ClangdSwitchSourceHeader")
-				vim.cmd("vsplit") -- Open in a vertical split
-			end, { buffer = bufnr, desc = "Switch source/header (vsplit)" })
 			if client.server_capabilities.inlayHintProvider then
 				vim.g.inlay_hints_visible = true
 				vim.lsp.inlay_hint.enable(true)
@@ -75,12 +80,21 @@ return {
 				"--header-insertion=never", -- Disable header insertion
 				"--fallback-style=google", -- Fallback style for formatting
 			},
-			on_attach = on_attach,
+			on_attach = function(client, bufnr)
+				-- Keybindings for switchSourceHeader
+				vim.keymap.set(
+					"n",
+					"<A-o>",
+					"<cmd>ClangdSwitchSourceHeader<cr>",
+					{ buffer = bufnr, desc = "Switch source/header" }
+				)
+
+				on_attach(client, bufnr)
+			end,
 			capabilities = capabilities,
 		})
 
 		lspconfig.ruff.setup({
-			on_attach = on_attach, -- Your custom on_attach, if any
 			capabilities = capabilities, -- Your custom capabilities (e.g., for nvim-cmp)
 			on_attach = function(client, bufnr_attached)
 				on_attach(client, bufnr_attached)
@@ -152,5 +166,27 @@ return {
 			-- DAP configuration
 			dap = {},
 		}
+
+		lspconfig.lua_ls.setup({
+			on_attach = on_attach,
+			capabilities = capabilities,
+			settings = {
+				Lua = {
+					runtime = {
+						version = "LuaJIT",
+					},
+					diagnostics = {
+						globals = { "vim" },
+					},
+					workspace = {
+						library = vim.api.nvim_get_runtime_file("", true),
+						checkThirdParty = false,
+					},
+					telemetry = {
+						enable = false,
+					},
+				},
+			},
+		})
 	end,
 }
