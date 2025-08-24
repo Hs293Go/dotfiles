@@ -29,8 +29,8 @@ return {
 					"cmake",
 					"ruff",
 					"pyright",
-					"jedi_language_server@0.42.0",
 					"rust_analyzer",
+					"lua_ls",
 				},
 			})
 
