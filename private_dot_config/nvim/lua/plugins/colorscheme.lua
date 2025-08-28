@@ -1,11 +1,30 @@
 return {
-	"catppuccin/nvim",
-	version = "v1.11.0",
-	opts = {
-		flavor = "mocha",
-		transparent_background = true,
-		integrations = {
-			blink_cmp = true,
+	{
+		"catppuccin/nvim",
+		version = "v1.11.0",
+		opts = {
+			flavor = "mocha",
+			transparent_background = true,
+			integrations = {
+				blink_cmp = true,
+			},
+		},
+	},
+	{
+		"folke/snacks.nvim",
+		opts = {
+			dashboard = {
+				preset = {
+					header = [[
+███╗   ██╗██╗   ██╗ █████╗  █████╗  ██████╗ ██╗   ██╗██╗███╗   ███╗      
+████╗  ██║╚██╗ ██╔╝██╔══██╗██╔══██╗██╔═══██╗██║   ██║██║████╗ ████║ /\ /\
+██╔██╗ ██║ ╚████╔╝ ███████║███████║██║   ██║██║   ██║██║██╔████╔██║ =o o=
+██║╚██╗██║  ╚██╔╝  ██╔══██║██╔══██║██║   ██║╚██╗ ██╔╝██║██║╚██╔╝██║ \_Y_/
+██║ ╚████║   ██║   ██║  ██║██║  ██║╚██████╔╝ ╚████╔╝ ██║██║ ╚═╝ ██║      
+╚═╝  ╚═══╝   ╚═╝   ╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝   ╚═══╝  ╚═╝╚═╝     ╚═╝      
+]],
+				},
+			},
 		},
 	},
 }
