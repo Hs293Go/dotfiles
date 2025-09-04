@@ -30,4 +30,13 @@ return {
 			},
 		},
 	},
+	keys = {
+		{
+			"<C-S-I>",
+			function()
+				require("conform").format({ async = true })
+			end,
+			desc = "Format file",
+		},
+	},
 }

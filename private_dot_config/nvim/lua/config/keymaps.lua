@@ -7,14 +7,24 @@ vim.api.nvim_set_keymap("n", "<Tab>", ":bnext<CR>", { noremap = true, silent = t
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":bprev<CR>", { noremap = true, silent = true })
 
 -- Remap floating terminal to <C-`> for vscode compatibility
-local toggle_floating_terminal = function()
-	require("snacks").terminal.toggle()
+local Term = require("snacks").terminal
+local get_unique_terminal = function()
+	Term.get(nil, { env = { NVIM_TERM_UID = vim.fn.sha256(os.time() .. vim.loop.hrtime()) } })
 end
-vim.keymap.set("n", "<C-`>", toggle_floating_terminal, { desc = "Terminal (cwd)", noremap = true, silent = true })
-vim.keymap.set("t", "<C-`>", toggle_floating_terminal, { desc = "Terminal (cwd)", noremap = true, silent = true })
-vim.keymap.set("t", "<C-S-5>", function()
-	require("snacks").terminal.open()
-end, { desc = "Create new terminal", noremap = true, silent = true })
+local toggle_all = function()
+	local termlist = Term.list()
+	if #termlist == 0 then
+		get_unique_terminal()
+		return
+	end
+	for _, term in pairs(termlist) do
+		term:toggle()
+	end
+end
+vim.keymap.set("n", "<C-`>", toggle_all, { desc = "Terminal (cwd)", noremap = true, silent = true })
+vim.keymap.set("t", "<C-`>", toggle_all, { desc = "Terminal (cwd)", noremap = true, silent = true })
+
+vim.keymap.set("t", "<C-S-5>", get_unique_terminal, { desc = "Create new terminal", noremap = true, silent = true })
 
 local delete_buffer = function()
 	require("snacks").bufdelete()
