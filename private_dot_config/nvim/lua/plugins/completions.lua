@@ -26,10 +26,19 @@ return {
 				["<C-k>"] = { "snippet_backward", "fallback" },
 			},
 			completion = {
-				ghost_text = { enabled = false },
+				ghost_text = {
+					enabled = false, -- Reserve ghost test for AI autosuggestion only
+				},
 			},
 			snippets = { preset = "luasnip" },
 			sources = {
+				default = { "lsp", "path", "snippets" },
+				transform_items = function(_, items) -- REMOVE "buffer" even if plugins included it
+					return vim.tbl_filter(function(item)
+						return item.kind ~= vim.lsp.protocol.CompletionItemKind.Text
+					end, items)
+				end,
+
 				compat = {
 					vimtex = {
 						name = "vimtex",
@@ -47,8 +56,6 @@ return {
 			"honza/vim-snippets", -- Snippet collection
 		},
 		version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-		build = "make install_jsregexp",
-		lazy = false,
 		config = function()
 			-- Load snippets from friendly-snippets (vscode format)
 			require("luasnip.loaders.from_vscode").lazy_load()
