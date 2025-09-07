@@ -12,7 +12,7 @@ let
       scheme-medium latexmk collection-latex collection-latexextra
       collection-latexrecommended collection-bibtexextra collection-luatex
       collection-langcjk collection-publishers collection-fontsrecommended
-      collection-fontsextra;
+      collection-fontsextra ut-thesis;
   };
 in {
   # Home Manager needs a bit of information about you and the paths it should
@@ -65,6 +65,7 @@ in {
     tex
 
     nmap
+    kdePackages.okular
   ];
 
   programs.zsh = {
