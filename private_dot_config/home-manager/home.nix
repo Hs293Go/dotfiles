@@ -85,6 +85,9 @@ in {
       source ${pkgs.fzf}/share/fzf/key-bindings.zsh
       source ${pkgs.fzf}/share/fzf/completion.zsh
 
+      autoload edit-command-line;
+      zle -N edit-command-line
+      bindkey -M vicmd vv edit-command-line
 
       if [ $TERM = "xterm-kitty" ] ; then
         alias ssh='kitty +kitten ssh'
