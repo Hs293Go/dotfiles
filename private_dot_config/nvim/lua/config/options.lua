@@ -4,11 +4,6 @@ vim.opt.ignorecase = true -- case insensitive
 vim.opt.mouse = "v" -- middle-click paste with
 vim.opt.hlsearch = true -- highlight search
 
-vim.opt.tabstop = 4
-vim.opt.shiftwidth = 4
-vim.opt.softtabstop = 4
-vim.opt.expandtab = true
-
 vim.opt.wildmenu = true
 vim.opt.wildmode = { "longest:full", "full" }
 vim.opt.signcolumn = "yes"
@@ -22,4 +17,7 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.cursorline = true
 vim.opt.ttyfast = true
 vim.opt.swapfile = false
-vim.opt.foldmethod = "syntax"
+vim.o.foldcolumn = "1" -- '0' is not bad
+vim.opt.foldlevel = 99 -- Using ufo provider need a large value, feel free to decrease the value
+vim.opt.foldlevelstart = 99
+vim.opt.foldenable = true

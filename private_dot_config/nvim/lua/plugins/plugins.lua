@@ -14,6 +14,29 @@ return {
 		end,
 	},
 	{
+		"kevinhwang91/nvim-ufo",
+		dependencies = "kevinhwang91/promise-async",
+		keys = {
+			{
+				"zR",
+				function()
+					require("ufo").openAllFolds()
+				end,
+				desc = "Open all folds (ufo)",
+			},
+			{
+				"zM",
+				function()
+					require("ufo").closeAllFolds()
+				end,
+				desc = "Close all folds (ufo)",
+			},
+		},
+		config = function()
+			require("ufo").setup({})
+		end,
+	},
+	{
 		"folke/flash.nvim",
 		event = "VeryLazy",
 		---@type Flash.Config

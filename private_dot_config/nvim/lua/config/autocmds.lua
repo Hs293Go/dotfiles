@@ -1,9 +1,23 @@
+local lang_settings = {
+	two_spaces = { "c", "cpp", "cuda", "json", "yaml", "xml", "nix", "toml", "cmake", "markdown" },
+	four_spaces = { "python", "lua", "bash", "sh", "rust" },
+}
+
+local function set_tab_width(width)
+	return function()
+		vim.opt_local.tabstop = width
+		vim.opt_local.shiftwidth = width
+		vim.opt_local.softtabstop = width
+		vim.opt_local.expandtab = true
+	end
+end
+
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "cpp", "c", "cuda", "json", "xml", "nix", "toml" },
-	command = "setlocal ts=2 sw=2 sts=2 expandtab",
+	pattern = lang_settings.two_spaces,
+	callback = set_tab_width(2),
 })
 
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "python", "lua", "sh", "rust", "yaml" },
-	command = "setlocal ts=4 sw=4 sts=4 expandtab",
+	pattern = lang_settings.four_spaces,
+	callback = set_tab_width(4),
 })
