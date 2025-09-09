@@ -64,6 +64,7 @@ in {
 
     tex
 
+    htop
     nmap
     kdePackages.okular
   ];
@@ -98,6 +99,8 @@ in {
       if [ "''${#ros_setup_scripts[@]}" -eq 1 ] ; then
         source "''${ros_setup_scripts[@]:0:1}"
       fi
+
+      unsetopt sharehistory
     '';
     envExtra = ''
       # Bootstrap logic managed by you
