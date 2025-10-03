@@ -32,6 +32,9 @@ in {
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+    # Build and dev tools: general
+    act
+
     # Build and dev tools: C++
     ninja
     clang-tools
