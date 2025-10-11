@@ -27,7 +27,9 @@ vim.keymap.set("t", "<C-`>", toggle_all, { desc = "Terminal (cwd)", noremap = tr
 vim.keymap.set("t", "<C-S-5>", get_unique_terminal, { desc = "Create new terminal", noremap = true, silent = true })
 
 local delete_buffer = function()
-	require("snacks").bufdelete()
+	if string.find(vim.bo.buftype, "terminal") == nil then
+		require("snacks").bufdelete()
+	end
 end
 
 -- Remap delete buffer to <C-c>
