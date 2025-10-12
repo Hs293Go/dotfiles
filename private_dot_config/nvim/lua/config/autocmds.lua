@@ -1,6 +1,6 @@
 local lang_settings = {
 	two_spaces = { "c", "cpp", "cuda", "json", "yaml", "xml", "nix", "toml", "cmake", "markdown" },
-	four_spaces = { "python", "lua", "bash", "sh", "rust" },
+	four_spaces = { "python", "lua", "bash", "sh", "rust", "tex" },
 }
 
 local function set_tab_width(width)
