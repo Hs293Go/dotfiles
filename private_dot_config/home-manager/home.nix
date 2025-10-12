@@ -101,6 +101,12 @@ in {
       ros_setup_scripts=(/opt/ros/*/setup.zsh)
       if [ "''${#ros_setup_scripts[@]}" -eq 1 ] ; then
         source "''${ros_setup_scripts[@]:0:1}"
+        colcon_argcomplete_script=/usr/share/colcon_argcomplete/hook/colcon-argcomplete.zsh
+        if [ -f "''${colcon_argcomplete_script}" ] ; then
+          source "$colcon_argcomplete_script"
+          eval "$(register-python-argcomplete3 ros2)"
+          eval "$(register-python-argcomplete3 colcon)"
+        fi
       fi
 
       unsetopt sharehistory
