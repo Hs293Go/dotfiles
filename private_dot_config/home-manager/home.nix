@@ -104,6 +104,11 @@ in {
         colcon_argcomplete_script=/usr/share/colcon_argcomplete/hook/colcon-argcomplete.zsh
         if [ -f "''${colcon_argcomplete_script}" ] ; then
           source "$colcon_argcomplete_script"
+          if command -v register-python-argcomplete3 &> /dev/null; then
+            :
+          elif command -v register-python-argcomplete &> /dev/null; then
+            alias register-python-argcomplete3=register-python-argcomplete
+          fi
           eval "$(register-python-argcomplete3 ros2)"
           eval "$(register-python-argcomplete3 colcon)"
         fi
