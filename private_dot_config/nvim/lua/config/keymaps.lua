@@ -45,3 +45,6 @@ end)
 vim.keymap.set("v", "<C-/>", "gc", {
 	remap = true,
 })
+
+-- Exit terminal insert mode safely
+vim.keymap.set("t", "<C-q>", [[<C-\><C-n>]], { noremap = true, silent = true, desc = "Exit terminal mode" })
