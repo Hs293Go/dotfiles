@@ -1,5 +1,7 @@
 # clangd cache
 .cache
+compile_commands.json
+
 cmake-build-*/
 
 # CMake user presets
