@@ -32,6 +32,8 @@ in {
   # The home.packages option allows you to install Nix packages into your
   # environment.
   home.packages = with pkgs; [
+    curl
+    git
     # Build and dev tools: general
     act
 
@@ -77,7 +79,7 @@ in {
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-    dotDir = ".config/zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
 
     initContent = ''
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme;
@@ -128,31 +130,28 @@ in {
       }
       {
         name = "enhancd";
-        src = pkgs.fetchFromGitHub {
-          owner = "babarot";
-          repo = "enhancd";
-          rev = "main";
-          sha256 = "09wa6s36xlyzbakgqadcjk4g2rzinp2l3irn8ikagl445b11p954";
+        src = pkgs.fetchgit {
+          url = "https://github.com/babarot/enhancd.git";
+          rev = "b911969";
+          sha256 = "sha256-kaintLXSfLH7zdLtcoZfVNobCJCap0S/Ldq85wd3krI=";
         };
         file = "init.sh";
       }
       {
         name = "omz-git";
-        src = pkgs.fetchFromGitHub {
-          owner = "ohmyzsh";
-          repo = "ohmyzsh";
-          rev = "master";
-          sha256 = "0wwwh5h15gwk68k30wh4bnyy7wbz9v80khgf86gql0gmipzm5038";
+        src = pkgs.fetchgit {
+          url = "https://github.com/ohmyzsh/ohmyzsh.git";
+          rev = "18d0a63"; # commit hash
+          sha256 = "sha256-cgGgWW6WNUIHKOEV7jfHQuClD2WRwSSFOQ76GG8ixrA=";
         };
         file = "plugins/git/git.plugin.zsh";
       }
       {
         name = "omz-debian";
-        src = pkgs.fetchFromGitHub {
-          owner = "ohmyzsh";
-          repo = "ohmyzsh";
-          rev = "master";
-          sha256 = "0wwwh5h15gwk68k30wh4bnyy7wbz9v80khgf86gql0gmipzm5038";
+        src = pkgs.fetchgit {
+          url = "https://github.com/ohmyzsh/ohmyzsh.git";
+          rev = "18d0a63"; # commit hash
+          sha256 = "sha256-cgGgWW6WNUIHKOEV7jfHQuClD2WRwSSFOQ76GG8ixrA=";
         };
         file = "plugins/debian/debian.plugin.zsh";
       }
