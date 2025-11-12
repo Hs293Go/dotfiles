@@ -100,19 +100,21 @@ in {
         alias ssh='kitty +kitten ssh'
       fi
 
-      ros_setup_scripts=(/opt/ros/*/setup.zsh)
-      if [ "''${#ros_setup_scripts[@]}" -eq 1 ] ; then
-        source "''${ros_setup_scripts[@]:0:1}"
-        colcon_argcomplete_script=/usr/share/colcon_argcomplete/hook/colcon-argcomplete.zsh
-        if [ -f "''${colcon_argcomplete_script}" ] ; then
-          source "$colcon_argcomplete_script"
-          if command -v register-python-argcomplete3 &> /dev/null; then
-            :
-          elif command -v register-python-argcomplete &> /dev/null; then
-            alias register-python-argcomplete3=register-python-argcomplete
+      if [ -d /opt/ros ] ; then
+        ros_setup_scripts=(/opt/ros/*/setup.zsh)
+        if [ "''${#ros_setup_scripts[@]}" -eq 1 ] ; then
+          source "''${ros_setup_scripts[@]:0:1}"
+          colcon_argcomplete_script=/usr/share/colcon_argcomplete/hook/colcon-argcomplete.zsh
+          if [ -f "''${colcon_argcomplete_script}" ] ; then
+            source "$colcon_argcomplete_script"
+            if command -v register-python-argcomplete3 &> /dev/null; then
+              :
+            elif command -v register-python-argcomplete &> /dev/null; then
+              alias register-python-argcomplete3=register-python-argcomplete
+            fi
+            eval "$(register-python-argcomplete3 ros2)"
+            eval "$(register-python-argcomplete3 colcon)"
           fi
-          eval "$(register-python-argcomplete3 ros2)"
-          eval "$(register-python-argcomplete3 colcon)"
         fi
       fi
 
@@ -182,6 +184,7 @@ in {
     ".config/kitty/kitty.conf".source = ./dotfiles/kitty.conf;
     ".ipython/profile_default/ipython_config.py".source =
       ./dotfiles/ipython/profile_default/ipython_config.py;
+    ".config/lazygit/config.yml".source = ./dotfiles/lazygit_config.yml;
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
