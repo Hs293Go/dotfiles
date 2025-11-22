@@ -26,7 +26,7 @@ return {
 				args = { "--fallback-style=Google" },
 			},
 			latexindent = {
-				args = { "-g", "/dev/null" },
+				args = { "-g", "/dev/null", "-y", "defaultIndent:'    '" },
 			},
 		},
 	},
