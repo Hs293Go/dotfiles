@@ -131,15 +131,6 @@ in {
         src = pkgs.zsh-vi-mode;
       }
       {
-        name = "enhancd";
-        src = pkgs.fetchgit {
-          url = "https://github.com/babarot/enhancd.git";
-          rev = "b911969";
-          sha256 = "sha256-kaintLXSfLH7zdLtcoZfVNobCJCap0S/Ldq85wd3krI=";
-        };
-        file = "init.sh";
-      }
-      {
         name = "omz-git";
         src = pkgs.fetchgit {
           url = "https://github.com/ohmyzsh/ohmyzsh.git";
