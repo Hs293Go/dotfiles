@@ -34,6 +34,9 @@ in {
   home.packages = with pkgs; [
     curl
     git
+    zip
+    unzip
+
     # Build and dev tools: general
     act
 
@@ -48,6 +51,7 @@ in {
 
     # Editors
     neovim
+    tree-sitter
 
     # Shell QOL 
     fd
