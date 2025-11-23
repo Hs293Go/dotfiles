@@ -33,7 +33,6 @@ return {
 			question_header = "## User ",
 			answer_header = "## Copilot ",
 			error_header = "## Error ",
-			prompts = prompts,
 			-- model = "claude-3.7-sonnet",
 			mappings = {
 				-- Use tab for completion
@@ -74,20 +73,6 @@ return {
 			local select = require("CopilotChat.select")
 			vim.api.nvim_create_user_command("CopilotChatVisual", function(args)
 				chat.ask(args.args, { selection = select.visual })
-			end, { nargs = "*", range = true })
-
-			-- Inline chat with Copilot
-			vim.api.nvim_create_user_command("CopilotChatInline", function(args)
-				chat.ask(args.args, {
-					selection = select.visual,
-					window = {
-						layout = "float",
-						relative = "cursor",
-						width = 1,
-						height = 0.4,
-						row = 1,
-					},
-				})
 			end, { nargs = "*", range = true })
 
 			-- Restore CopilotChatBuffer
@@ -135,19 +120,12 @@ return {
 			{ "<leader>ae", "<cmd>CopilotChatExplain<cr>", desc = "CopilotChat - Explain code" },
 			{ "<leader>at", "<cmd>CopilotChatTests<cr>", desc = "CopilotChat - Generate tests" },
 			{ "<leader>ar", "<cmd>CopilotChatReview<cr>", desc = "CopilotChat - Review code" },
-			{ "<leader>aR", "<cmd>CopilotChatRefactor<cr>", desc = "CopilotChat - Refactor code" },
 			-- Chat with Copilot in visual mode
 			{
 				"<leader>av",
 				":CopilotChatVisual",
 				mode = "x",
 				desc = "CopilotChat - Open in vertical split",
-			},
-			{
-				"<leader>ax",
-				":CopilotChatInline",
-				mode = "x",
-				desc = "CopilotChat - Inline chat",
 			},
 			-- Custom input for CopilotChat
 			{
@@ -179,8 +157,6 @@ return {
 			{ "<leader>av", "<cmd>CopilotChatToggle<cr>", desc = "CopilotChat - Toggle" },
 			-- Copilot Chat Models
 			{ "<leader>a?", "<cmd>CopilotChatModels<cr>", desc = "CopilotChat - Select Models" },
-			-- Copilot Chat Agents
-			{ "<leader>aa", "<cmd>CopilotChatAgents<cr>", desc = "CopilotChat - Select Agents" },
 		},
 	},
 } -- GitHub Copilot integration
