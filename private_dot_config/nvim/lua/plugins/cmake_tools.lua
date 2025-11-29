@@ -41,7 +41,7 @@ return {
 		},
 		{
 			"<leader>Csc",
-			":CMakeSelectBuildPreset<CR>",
+			":CMakeSelectConfigurePreset<CR>",
 			desc = "Select CMake configure preset",
 		},
 		{
