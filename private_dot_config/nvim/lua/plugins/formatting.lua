@@ -7,7 +7,7 @@ return {
 			cmake = { "cmake_format" },
 			md = { "prettier" },
 			tex = { "latexindent" },
-			python = { "black", lsp_format = "prefer" },
+			python = { "ruff", lsp_format = "prefer" },
 			c = { "clang-format", lsp_format = "prefer" },
 			cpp = { "clang-format", lsp_format = "prefer" },
 			cuda = { "clang-format", lsp_format = "prefer" },
