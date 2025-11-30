@@ -49,6 +49,7 @@ return {
 					"prettier",
 					"rustfmt",
 					"nixfmt",
+					"sqlfluff",
 					{
 						"latexindent",
 						version = "V3.19.1",
