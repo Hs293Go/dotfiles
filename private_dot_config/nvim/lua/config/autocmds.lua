@@ -21,3 +21,11 @@ vim.api.nvim_create_autocmd("FileType", {
 	pattern = lang_settings.four_spaces,
 	callback = set_tab_width(4),
 })
+
+-- Associate tsx files with typescript filetype
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+	pattern = "*.tsx",
+	callback = function()
+		vim.bo.filetype = "typescript"
+	end,
+})

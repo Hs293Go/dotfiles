@@ -18,6 +18,7 @@ return {
 			rust = { "rustfmt" },
 			nix = { "nixfmt" },
 			javascript = { "prettier" },
+			typescript = { "prettier" },
 			sql = { "sqlfluff" },
 		},
 		-- The options you set here will be merged with the builtin formatters.
