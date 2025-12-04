@@ -19,7 +19,7 @@ return {
 			nix = { "nixfmt" },
 			javascript = { "prettier" },
 			typescript = { "prettier" },
-			sql = { "sqlfluff" },
+			sql = { "pg_format" },
 		},
 		-- The options you set here will be merged with the builtin formatters.
 		-- You can also define any custom formatters here.
@@ -30,9 +30,6 @@ return {
 			},
 			latexindent = {
 				args = { "-g", "/dev/null", "-y", "defaultIndent:'    '" },
-			},
-			sqlfluff = {
-				args = { "format", "--dialect", "postgres" },
 			},
 		},
 	},
