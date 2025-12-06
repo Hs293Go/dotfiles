@@ -47,4 +47,6 @@ vim.keymap.set("v", "<C-/>", "gc", {
 })
 
 -- Exit terminal insert mode safely
-vim.keymap.set("t", "<C-q>", [[<C-\><C-n>]], { noremap = true, silent = true, desc = "Exit terminal mode" })
+for _, k in ipairs({ "h", "j", "k", "l" }) do
+	vim.keymap.set("t", "<C-" .. k .. ">", [[<C-\><C-n><C-w>]] .. k, { noremap = true, silent = true })
+end
