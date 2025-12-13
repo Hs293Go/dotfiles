@@ -154,7 +154,6 @@ in {
     enableZshIntegration =
       true; # or enableBashIntegration / enableFishIntegration
     silent = true;
-    config = { load_dotenv = true; };
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
