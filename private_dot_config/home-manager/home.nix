@@ -83,7 +83,7 @@ in {
     enableCompletion = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
-    dotDir = "./zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
 
     initContent = ''
       source ${pkgs.zsh-powerlevel10k}/share/zsh-powerlevel10k/powerlevel10k.zsh-theme;
@@ -219,7 +219,6 @@ in {
     fdr = "fda -uI --follow";
     ffd = "fd -F";
     xc = "xclip -selection clipboard";
-    nv = "nvim";
     ga = "git add";
     gaa = "git add --all";
     gap = "git apply";
@@ -243,6 +242,8 @@ in {
     gbsr = "git bisect reset";
     gbss = "git bisect start";
     gc = "git commit --verbose";
+    gcm = "git checkout main";
+    gcd = "git checkout develop";
     "gc!" = "git commit --verbose --amend";
     "gcn!" = "commit --verbose --no-edit --amend";
     gcB = "git checkout -B";
