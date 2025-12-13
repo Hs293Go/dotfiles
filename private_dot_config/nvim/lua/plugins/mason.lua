@@ -13,7 +13,6 @@ return {
 				"stylua",
 				"shfmt",
 				"latexindent",
-				"markdownlint-cli2",
 				"prettier",
 				"tree-sitter-cli",
 				"cmake-language-server",
@@ -46,11 +45,8 @@ return {
 						version = "v2.0.1",
 					},
 					"shfmt",
-					"markdownlint-cli2",
 					"prettier",
 					"rustfmt",
-					"nixfmt",
-					"sqlfluff",
 					{
 						"latexindent",
 						version = "V3.19.1",
@@ -70,8 +66,7 @@ return {
 		},
 		opts = {
 			automatic_installation = true,
-			ensure_installed,
-			{
+			ensure_installed = {
 				"codelldb",
 				"cpptools",
 			},
