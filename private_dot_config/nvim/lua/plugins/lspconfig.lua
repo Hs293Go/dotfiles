@@ -193,4 +193,11 @@ return {
 			},
 		})
 	end,
+	keys = {
+		{
+			"<leader>il",
+			"<cmd>LspInfo<cr>",
+			desc = "Show LSP info",
+		},
+	},
 }

@@ -35,11 +35,9 @@ return {
 	},
 	keys = {
 		{
-			"<C-S-I>",
-			function()
-				require("conform").format({ async = true })
-			end,
-			desc = "Format file",
+			"<leader>if",
+			"<cmd>ConformInfo<cr>",
+			desc = "Show conform.nvim info",
 		},
 	},
 }
