@@ -329,6 +329,22 @@ in {
     gts = "git tag --sign";
     gwt = "git worktree";
     gwta = "git worktree add";
+    dils = "docker image ls";
+    dila = "docker image ls -a";
+    dcls = "docker container ls";
+    dcla = "docker container ls -a";
+    drm = "docker rm";
+    "drm!" = "docker rm -f";
+    dirm = "docker image rm";
+    "dirm!" = "docker image rm -f";
+    dps = "docker ps";
+    dpa = "docker ps -a";
+    dlogs = "docker logs";
+    dexec = "docker exec -it";
+    dcu = "docker compose up";
+    dcud = "docker compose up -d";
+    dcd = "docker compose down";
+
   };
 
   # Let Home Manager install and manage itself.
