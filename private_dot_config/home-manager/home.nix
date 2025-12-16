@@ -244,7 +244,7 @@ in {
     gcm = "git checkout main";
     gcd = "git checkout develop";
     "gc!" = "git commit --verbose --amend";
-    "gcn!" = "commit --verbose --no-edit --amend";
+    "gcn!" = "git commit --verbose --no-edit --amend";
     gcB = "git checkout -B";
     gca = "git commit --verbose --all";
     gcam = "git commit --all --message";
