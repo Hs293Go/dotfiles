@@ -6,7 +6,7 @@ return {
 	keys = {
 		{
 			"<leader>Cg",
-			":CMakeBuild<CR>",
+			":CMakeGenerate<CR>",
 			desc = "Generate CMake project",
 		},
 		{
