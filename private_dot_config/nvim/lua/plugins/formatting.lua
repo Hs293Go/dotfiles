@@ -19,6 +19,9 @@ return {
 			nix = { "nixfmt" },
 			javascript = { "prettier" },
 			typescript = { "prettier" },
+			javascriptreact = { "prettier" },
+			typescriptreact = { "prettier" },
+			html = { "prettier" },
 			sql = { "pg_format" },
 		},
 		-- The options you set here will be merged with the builtin formatters.
