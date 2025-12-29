@@ -1,9 +1,8 @@
 return {
 	{
 		"mason-org/mason.nvim",
-		version = "1.11.0",
 		dependencies = {
-			{ "mason-org/mason-lspconfig.nvim", version = "1.32.0" },
+			"mason-org/mason-lspconfig.nvim",
 			"WhoIsSethDaniel/mason-tool-installer.nvim",
 		},
 		opts = {
@@ -14,7 +13,6 @@ return {
 				"shfmt",
 				"latexindent",
 				"prettier",
-				"tree-sitter-cli",
 				"cmake-language-server",
 				"codelldb",
 			},
@@ -39,11 +37,7 @@ return {
 					"cmake-language-server",
 					"cmakelang",
 					"cmakelint",
-					"tree-sitter-cli",
-					{
-						"stylua",
-						version = "v2.0.1",
-					},
+					"stylua",
 					"shfmt",
 					"prettier",
 					"rustfmt",
