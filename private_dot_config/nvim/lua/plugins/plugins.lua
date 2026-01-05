@@ -1,7 +1,7 @@
 return {
 	{
 		"nvim-mini/mini.surround",
-		disable = true,
+		enabled = false,
 	},
 	{
 		"kylechui/nvim-surround",
@@ -38,6 +38,6 @@ return {
 	},
 	{
 		"folke/flash.nvim",
-		disable = true,
+		enabled = false,
 	},
 }
