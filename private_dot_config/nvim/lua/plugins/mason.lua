@@ -30,6 +30,7 @@ return {
 					"lua_ls",
 					"ts_ls",
 				},
+				automatic_enable = false,
 			})
 
 			require("mason-tool-installer").setup({
