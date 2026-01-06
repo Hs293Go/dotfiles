@@ -1,5 +1,5 @@
 return {
-	"Civitasv/cmake-tools.nvim",
+	"Hs293Go/cmake-tools.nvim",
 	ft = { "cmake", "cmake.in", "CMakeLists.txt", "cpp", "c", "h", "hpp" },
 	lazy = true,
 	opts = {},
