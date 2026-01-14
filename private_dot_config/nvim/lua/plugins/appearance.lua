@@ -10,6 +10,18 @@ return {
 		},
 	},
 	{
+		"nvim-lualine/lualine.nvim",
+		opts = {
+			icons_enabled = true,
+			component_separators = { left = "", right = "" },
+			section_separators = { left = "", right = "" },
+			tabline = {
+				lualine_a = { { "tabs", mode = 2 } }, -- mode=2 shows tab names if set
+				lualine_z = {}, -- keep it clean (optional)
+			},
+		},
+	},
+	{
 		"folke/snacks.nvim",
 		opts = {
 			dashboard = {

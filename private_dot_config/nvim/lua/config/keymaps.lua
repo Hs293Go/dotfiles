@@ -6,6 +6,11 @@ vim.api.nvim_set_keymap("v", "::", ";", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<Tab>", ":bnext<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<S-Tab>", ":bprev<CR>", { noremap = true, silent = true })
 
+vim.keymap.del("n", "<leader><tab>]")
+vim.keymap.del("n", "<leader><tab>[")
+vim.keymap.set("n", "[<tab>", ":tabprevious<CR>", { noremap = true, silent = true, desc = "Previous tab" })
+vim.keymap.set("n", "]<tab>", ":tabnext<CR>", { noremap = true, silent = true, desc = "Next tab" })
+
 -- Remap floating terminal to <C-`> for vscode compatibility
 local Term = require("snacks").terminal
 local get_unique_terminal = function()
@@ -77,3 +82,7 @@ local function open_current_folder()
 end
 
 vim.keymap.set("n", "<leader>O", open_current_folder, { noremap = true, silent = true, desc = "Open current folder" })
+
+vim.keymap.del("n", "<leader>e")
+vim.keymap.del("n", "<leader>E")
+vim.keymap.del("n", "<leader>fe")

@@ -36,4 +36,8 @@ return {
 			require("ufo").setup({})
 		end,
 	},
+	{
+		"ibhagwan/fzf-lua",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+	},
 }
