@@ -1,4 +1,14 @@
 {
+  "incs": {
+    "prefix": "isys",
+    "description": "Include system headers",
+    "body": "#include <${1:cstdio}>"
+  },
+  "incu": {
+    "prefix": "iusr",
+    "description": "Include user headers",
+    "body": "#include \"${1:header.hpp}\""
+  },
   "nsd": {
     "prefix": "nsd",
     "description": "Namespace declaration",
