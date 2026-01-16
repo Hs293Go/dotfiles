@@ -36,8 +36,4 @@ return {
 			require("ufo").setup({})
 		end,
 	},
-	{
-		"folke/flash.nvim",
-		enabled = false,
-	},
 }
