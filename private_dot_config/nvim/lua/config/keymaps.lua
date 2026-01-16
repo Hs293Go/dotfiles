@@ -50,3 +50,30 @@ vim.keymap.set("v", "<C-/>", "gc", {
 for _, k in ipairs({ "h", "j", "k", "l" }) do
 	vim.keymap.set("t", "<C-" .. k .. ">", [[<C-\><C-n><C-w>]] .. k, { noremap = true, silent = true })
 end
+
+vim.keymap.set("n", "<leader>m", ":messages<CR>", { noremap = true, silent = true, desc = "Show messages" })
+
+vim.keymap.set({ "n", "v" }, "<leader>W", function()
+	vim.cmd("wa")
+end, { noremap = true, silent = true, desc = "Write all buffers" })
+
+-- write all and quit all
+vim.keymap.set({ "n", "v" }, "<leader>Q", function()
+	vim.cmd("wa")
+	vim.cmd("qa")
+end, { noremap = true, silent = true, desc = "Write all buffers and quit Neovim" })
+
+-- Open current folder in file explorer
+local function open_current_folder()
+	local cwd = vim.fn.getcwd()
+	vim.notify("Opening folder: " .. cwd, vim.log.levels.INFO, { title = "Neovim" })
+	if vim.fn.has("mac") == 1 then
+		vim.fn.jobstart({ "open", cwd }, { detach = true })
+	elseif vim.fn.has("win32") == 1 then
+		vim.fn.jobstart({ "explorer", cwd }, { detach = true })
+	else
+		vim.fn.jobstart({ "xdg-open", cwd }, { detach = true })
+	end
+end
+
+vim.keymap.set("n", "<leader>O", open_current_folder, { noremap = true, silent = true, desc = "Open current folder" })
