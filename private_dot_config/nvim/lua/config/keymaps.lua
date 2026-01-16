@@ -3,9 +3,6 @@ vim.api.nvim_set_keymap("v", ";", ":", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "::", ";", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("v", "::", ";", { noremap = true, silent = true })
 
-vim.api.nvim_set_keymap("n", "<Tab>", ":bnext<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<S-Tab>", ":bprev<CR>", { noremap = true, silent = true })
-
 vim.keymap.del("n", "<leader><tab>]")
 vim.keymap.del("n", "<leader><tab>[")
 vim.keymap.set("n", "[<tab>", ":tabprevious<CR>", { noremap = true, silent = true, desc = "Previous tab" })

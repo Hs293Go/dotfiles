@@ -38,6 +38,26 @@ return {
 	},
 	{
 		"ibhagwan/fzf-lua",
+		keys = {
+			{
+				"<leader>fdb",
+				function()
+					local fzf = require("fzf-lua")
+					local actions = require("fzf-lua").actions
+
+					fzf.buffers({
+						sort_lastused = true,
+						actions = {
+							["default"] = actions.buf_switch,
+							["ctrl-d"] = actions.buf_del, -- delete buffer
+							-- If you want "delete and stay in picker":
+							-- ["ctrl-d"] = { actions.buf_del, actions.resume },
+						},
+					})
+				end,
+				desc = "View and delete Buffers",
+			},
+		},
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
 }
