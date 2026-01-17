@@ -59,6 +59,7 @@ in {
     bat
     fzf
     tldr
+    zoxide
 
     # Fonts
     pkgs.zsh-powerlevel10k
@@ -122,6 +123,7 @@ in {
       fi
 
       unsetopt sharehistory
+      eval "$(zoxide init zsh)"
     '';
     envExtra = ''
       # Bootstrap logic managed by you
