@@ -65,21 +65,6 @@ vim.keymap.set({ "n", "v" }, "<leader>Q", function()
 	vim.cmd("qa")
 end, { noremap = true, silent = true, desc = "Write all buffers and quit Neovim" })
 
--- Open current folder in file explorer
-local function open_current_folder()
-	local cwd = vim.fn.getcwd()
-	vim.notify("Opening folder: " .. cwd, vim.log.levels.INFO, { title = "Neovim" })
-	if vim.fn.has("mac") == 1 then
-		vim.fn.jobstart({ "open", cwd }, { detach = true })
-	elseif vim.fn.has("win32") == 1 then
-		vim.fn.jobstart({ "explorer", cwd }, { detach = true })
-	else
-		vim.fn.jobstart({ "xdg-open", cwd }, { detach = true })
-	end
-end
-
-vim.keymap.set("n", "<leader>O", open_current_folder, { noremap = true, silent = true, desc = "Open current folder" })
-
 vim.keymap.del("n", "<leader>e")
 vim.keymap.del("n", "<leader>E")
 vim.keymap.del("n", "<leader>fe")
