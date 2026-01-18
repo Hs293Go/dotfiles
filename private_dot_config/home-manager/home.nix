@@ -123,7 +123,6 @@ in {
       fi
 
       unsetopt sharehistory
-      eval "$(zoxide init zsh)"
     '';
     envExtra = ''
       # Bootstrap logic managed by you
@@ -149,6 +148,11 @@ in {
   };
 
   programs.fzf = { enable = true; };
+
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
 
   programs.direnv = {
     enable = true;
