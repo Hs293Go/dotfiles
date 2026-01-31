@@ -66,7 +66,10 @@ function M.list_targets(binary_dir, configuration)
 			if tgt.name and not seen[tgt.name] then
 				seen[tgt.name] = true
 
-				table.insert(out, M.introspect_target(binary_dir, tgt.name, configuration))
+				local target = M.introspect_target(binary_dir, tgt.name, configuration)
+				if target then
+					table.insert(out, target)
+				end
 			end
 		end
 	end
