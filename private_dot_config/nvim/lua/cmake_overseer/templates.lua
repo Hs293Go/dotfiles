@@ -121,19 +121,13 @@ local function ensure_configure(ctx, on_ready, force)
 		local cfg = cfg_infos[cfg_name]
 
 		local binary_dir = expand(cfg.binaryDir, cfg.substitutions or {})
+		if not vim.uv.fs_stat(binary_dir) then
+			vim.fn.mkdir(binary_dir, "p")
+		end
 
-		local query_dir_components = { ".cmake", "api", "v1", "query" }
-		local query_dir = binary_dir
-		for _, comp in ipairs(query_dir_components) do
-			query_dir = vim.fs.joinpath(query_dir, comp)
-			local ok, md_err = vim.uv.fs_mkdir(query_dir, 438)
-			if not ok and md_err and md_err:match("EEXIST") == nil then
-				vim.notify(
-					"Failed to create File API query directory: " .. query_dir .. ": " .. err,
-					vim.log.levels.ERROR
-				)
-				return
-			end
+		local query_dir = vim.fs.joinpath(binary_dir, ".cmake/api/v1/query")
+		if not vim.uv.fs_stat(query_dir) then
+			vim.fn.mkdir(query_dir, "p")
 		end
 
 		local query_file = vim.fs.joinpath(query_dir, "codemodel-v2")
@@ -145,9 +139,26 @@ local function ensure_configure(ctx, on_ready, force)
 		end
 		vim.uv.fs_close(fd)
 
+		local cmd = {}
+		if cfg_name:match("^Builtin ") then
+			-- Special handling for Builtin presets: Use cmake -B <binary_dir> -S <source_dir>
+			cmd = {
+				"cmake",
+				"-B",
+				binary_dir,
+				"-S",
+				p.sourceDir,
+				"-G",
+				cfg.generator,
+				"-DCMAKE_EXPORT_COMPILE_COMMANDS=ON",
+			}
+		else
+			cmd = { "cmake", "--preset", cfg_name, "-DCMAKE_EXPORT_COMPILE_COMMANDS=ON" }
+		end
+
 		local task = overseer.new_task({
 			name = "cmake: configure (" .. cfg_name .. ")",
-			cmd = { "cmake", "--preset", cfg_name },
+			cmd = cmd,
 			cwd = p.sourceDir,
 			components = { "default", { "open_output", focus = false } },
 		})
@@ -156,15 +167,13 @@ local function ensure_configure(ctx, on_ready, force)
 			if t.status == "SUCCESS" then
 				ctx.configure_preset = cfg_name
 				ctx.binary_dir = binary_dir
+				ctx.cache_variables = cfg.cacheVariables or {}
 				local compile_commands = vim.fs.joinpath(ctx.binary_dir, "compile_commands.json")
 				local compile_commands_link = vim.fs.joinpath(p.sourceDir, "compile_commands.json")
 				if vim.uv.fs_stat(compile_commands) then
 					vim.uv.fs_symlink(compile_commands, compile_commands_link)
 				end
-				if not ctx.binary_dir or ctx.binary_dir == "" then
-					vim.notify("BUG: binary_dir not set after configure for preset " .. cfg_name, vim.log.levels.ERROR)
-					return
-				end
+				assert(ctx.binary_dir ~= nil and ctx.binary_dir ~= "", "binary_dir should be set after configure")
 				session.save_state(ctx)
 				on_ready(ctx)
 			else
@@ -213,7 +222,7 @@ local function ensure_build(ctx, on_ready, force)
 					break
 				end
 			end
-			ctx2.configuration = build and build.configuration or nil
+			ctx2.configuration = build and build.configuration or ctx2.cache_variables.CMAKE_BUILD_TYPE or "Debug"
 			on_ready(ctx2)
 			return
 		end
@@ -222,7 +231,7 @@ local function ensure_build(ctx, on_ready, force)
 		if not force and not ctx2.build_preset then
 			local state = session.load_state() -- Implementation from previous step
 			if state.build_preset then
-				ctx2.configuration = state.configuration
+				ctx2.configuration = state.configuration or state.cache_variables.CMAKE_BUILD_TYPE or "Debug"
 				ctx2.build_preset = state.build_preset
 				if build_preset_valid(p, ctx2) then
 					on_ready(ctx2)
@@ -248,12 +257,8 @@ local function ensure_build(ctx, on_ready, force)
 			end
 
 			local build = build_infos[build_name]
-			if not ctx2.binary_dir then
-				print("BUG: binary_dir not set before build preset selection")
-				return
-			end
 			ctx2.build_preset = build_name
-			ctx2.configuration = build.configuration
+			ctx2.configuration = build.configuration or ctx2.cache_variables.CMAKE_BUILD_TYPE or "Debug"
 			session.save_state(ctx2) -- Save selection to disk
 			on_ready(ctx2)
 		end)
@@ -280,9 +285,17 @@ end
 
 function M.build(on_complete)
 	ensure_build(M.ctx, function(ctx)
+		local cmd = {}
+
+		if ctx.build_preset:match("^Builtin ") then
+			-- Special handling for Builtin presets: Use cmake --build <binary_dir> --config <configuration>
+			cmd = { "cmake", "--build", ctx.binary_dir, "--config", ctx.configuration }
+		else
+			cmd = { "cmake", "--build", "--preset", ctx.build_preset }
+		end
 		local task = overseer.new_task({
 			name = "cmake: build (" .. ctx.build_preset .. ")",
-			cmd = { "cmake", "--build", "--preset", ctx.build_preset },
+			cmd = cmd,
 			cwd = presets.load().sourceDir, -- or store p.sourceDir in ctx if you like
 			components = { "default", { "open_output", focus = false } },
 		})
@@ -299,10 +312,7 @@ end
 
 function M.launch(force_reselect)
 	ensure_build(M.ctx, function(ctx)
-		if not ctx.binary_dir or not ctx.configuration then
-			vim.notify("BUG: launch called with incomplete context: " .. vim.inspect(ctx), vim.log.levels.ERROR)
-			return
-		end
+		assert(ctx.binary_dir and ctx.configuration, "binary_dir and configuration should be set after ensure_build")
 
 		-- Check if we have a cached target
 		if not force_reselect and ctx.launch_target then
