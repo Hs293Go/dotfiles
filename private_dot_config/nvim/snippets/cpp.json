@@ -1,11 +1,16 @@
 {
+  "Guard": {
+    "prefix": "Guard",
+    "description": "Header guard",
+    "body": "#ifndef ${1:HEADER_NAME}_HPP_\n#define ${1:HEADER_NAME}_HPP_\n\n$0\n\n#endif // ${1:HEADER_NAME}_HPP_"
+  },
   "incs": {
-    "prefix": "isys",
+    "prefix": "incs",
     "description": "Include system headers",
     "body": "#include <${1:cstdio}>"
   },
   "incu": {
-    "prefix": "iusr",
+    "prefix": "incu",
     "description": "Include user headers",
     "body": "#include \"${1:header.hpp}\""
   },
@@ -22,10 +27,10 @@
   "tmp": {
     "prefix": "tmp",
     "description": "Template declaration",
-    "body": "template <${1:typename T}>\n$0"
+    "body": "template <${1:typename} ${2:T}>"
   },
   "tn": {
-    "prefix": "tn",
+    "prefix": "type",
     "description": "typename",
     "body": "typename"
   },
