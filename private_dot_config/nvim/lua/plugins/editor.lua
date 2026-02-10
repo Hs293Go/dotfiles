@@ -60,4 +60,102 @@ return {
 		},
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
+	{
+		"ThePrimeagen/refactoring.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		lazy = false,
+		keys = {
+			{
+				"<leader>re",
+				function()
+					return require("refactoring").refactor("Extract Function")
+				end,
+				mode = { "n", "x" },
+				expr = true,
+				desc = "Refactor: Extract Function",
+			},
+			{
+				"<leader>rf",
+				function()
+					return require("refactoring").refactor("Extract Function To File")
+				end,
+				mode = { "n", "x" },
+				expr = true,
+				desc = "Refactor: Extract Function To File",
+			},
+			{
+				"<leader>rv",
+				function()
+					return require("refactoring").refactor("Extract Variable")
+				end,
+				mode = { "n", "x" },
+				expr = true,
+				desc = "Refactor: Extract Variable",
+			},
+			{
+				"<leader>rI",
+				function()
+					return require("refactoring").refactor("Inline Function")
+				end,
+				mode = { "n", "x" },
+				expr = true,
+				desc = "Refactor: Inline Function",
+			},
+			{
+				"<leader>ri",
+				function()
+					return require("refactoring").refactor("Inline Variable")
+				end,
+				mode = { "n", "x" },
+				expr = true,
+				desc = "Refactor: Inline Variable",
+			},
+			{
+				"<leader>rbb",
+				function()
+					return require("refactoring").refactor("Extract Block")
+				end,
+				mode = { "n", "x" },
+				expr = true,
+				desc = "Refactor: Extract Block",
+			},
+			{
+				"<leader>rbf",
+				function()
+					return require("refactoring").refactor("Extract Block To File")
+				end,
+				mode = { "n", "x" },
+				expr = true,
+				desc = "Refactor: Extract Block To File",
+			},
+		},
+		opts = {
+			prompt_func_return_type = {
+				go = false,
+				java = false,
+
+				cpp = false,
+				c = false,
+				h = false,
+				hpp = false,
+				cxx = false,
+			},
+			prompt_func_param_type = {
+				go = false,
+				java = false,
+
+				cpp = false,
+				c = false,
+				h = false,
+				hpp = false,
+				cxx = false,
+			},
+			printf_statements = {},
+			print_var_statements = {},
+			show_success_message = false,
+		},
+	},
 }
