@@ -8,6 +8,7 @@ local M = {
 	ctx = {
 		configure_preset = nil,
 		build_preset = nil,
+		launch_target = nil,
 		binary_dir = nil,
 		configuration = nil, -- e.g. Debug/Release for multi-config
 	},
@@ -101,7 +102,10 @@ local function ensure_configure(ctx, on_ready, force)
 			return false
 		end
 		if not c.binaryDir or c.binaryDir == "" then
-			vim.notify("Skipping preset " .. c.name .. " due to missing binaryDir", vim.log.levels.WARN)
+			vim.notify(
+				"Skipping preset " .. c.name .. " due to missing binaryDir" .. vim.inspect(c),
+				vim.log.levels.WARN
+			)
 			return false
 		end
 		return true
@@ -283,6 +287,10 @@ function M.reselect_build()
 	end, true)
 end
 
+function M.reselect_launch()
+	M.launch(true)
+end
+
 function M.build(on_complete)
 	ensure_build(M.ctx, function(ctx)
 		local cmd = {}
@@ -308,6 +316,53 @@ function M.build(on_complete)
 		end
 		task:start()
 	end, false)
+end
+
+function M.run_target(tgt_name)
+	-- IDE behavior: Always build before running to ensure the binary is fresh
+	M.build(function()
+		local ctx = M.ctx
+		-- Re-query the File API after build to ensure we have the latest artifact paths
+		local targets, terr = fileapi.list_targets(ctx.binary_dir, ctx.configuration)
+		if not targets then
+			vim.notify("Run failed: " .. (terr or "Unknown error"), vim.log.levels.ERROR)
+			return
+		end
+
+		-- Resolve target info
+		local target_names, target_infos = extract_names_and_infos(targets, function(tgt)
+			return tgt.name == tgt_name
+		end)
+
+		local tgt_info = target_infos[tgt_name]
+		if not tgt_info then
+			vim.notify("Target " .. tgt_name .. " not found in build index", vim.log.levels.ERROR)
+			return
+		end
+
+		-- Locate binary path
+		local artifact = tgt_info.artifacts and tgt_info.artifacts[1] and tgt_info.artifacts[1].path
+		if not artifact then
+			vim.notify("No artifacts found for target: " .. tgt_name, vim.log.levels.ERROR)
+			return
+		end
+
+		local program = vim.fs.joinpath(ctx.binary_dir, artifact)
+		if not vim.uv.fs_stat(program) then
+			vim.notify("Binary not found: " .. program, vim.log.levels.ERROR)
+			return
+		end
+
+		-- Launch the executable
+		overseer
+			.new_task({
+				name = "run: " .. tgt_name,
+				cmd = { program },
+				cwd = vim.fs.dirname(program),
+				components = { "default", { "open_output", focus = false } },
+			})
+			:start()
+	end)
 end
 
 function M.launch(force_reselect)
@@ -345,28 +400,19 @@ function M.launch(force_reselect)
 				vim.notify("Executable not found: " .. program, vim.log.levels.ERROR)
 				return
 			end
-			overseer
-				.new_task({
-					name = "launch: " .. tgt_name,
-					cmd = { program },
-					cwd = vim.fs.dirname(program),
-					components = { "default", { "open_output", focus = false } },
-				})
-				:start()
+			ctx.launch_target = tgt_name
+			if session and session.save_state then
+				session.save_state(ctx)
+			end
+
+			-- Hand off to the run chain (Build -> Run)
+			M.run_target(tgt_name)
 		end)
 	end, false)
 end
 
 function M.test()
-	local p, err = presets.load()
-	if not p then
-		return vim.notify(err, vim.log.levels.ERROR)
-	end
-
-	local names = vim.tbl_map(function(x)
-		return x.name
-	end, p.configure)
-	pick(names, "Choose configure preset (for ctest dir):", function(cfg_name)
+	ensure_configure(M.ctx, function(ctx)
 		local cfg = nil
 		for _, c in ipairs(p.configure) do
 			if c.name == cfg_name then

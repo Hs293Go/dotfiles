@@ -46,5 +46,12 @@ return {
 			end,
 			desc = "CMake Reselect Build Preset",
 		},
+		{
+			"<leader>Csl",
+			function()
+				require("cmake_overseer.templates").reselect_launch()
+			end,
+			desc = "CMake Reselect Launch Preset",
+		},
 	},
 }
