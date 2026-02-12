@@ -45,7 +45,8 @@ function M.load_state()
 	local content = f:read("*a")
 	f:close()
 	local ctx = vim.json.decode(content)
-	if not ctx or type(ctx) ~= "table" or not ctx.configure_preset or not ctx.binary_dir then
+	if not ctx or type(ctx) ~= "table" then
+		vim.notify("Failed to decode session state from: " .. path, vim.log.levels.WARN)
 		return {}
 	end
 	return ctx or {}

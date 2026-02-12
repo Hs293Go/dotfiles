@@ -330,7 +330,7 @@ function M.run_target(tgt_name)
 		end
 
 		-- Resolve target info
-		local target_names, target_infos = extract_names_and_infos(targets, function(tgt)
+		local _, target_infos = extract_names_and_infos(targets, function(tgt)
 			return tgt.name == tgt_name
 		end)
 
@@ -357,7 +357,7 @@ function M.run_target(tgt_name)
 		overseer
 			.new_task({
 				name = "run: " .. tgt_name,
-				cmd = { program },
+				cmd = "sleep 0.5 && " .. program,
 				cwd = vim.fs.dirname(program),
 				components = { "default", { "open_output", focus = false } },
 			})
@@ -370,8 +370,16 @@ function M.launch(force_reselect)
 		assert(ctx.binary_dir and ctx.configuration, "binary_dir and configuration should be set after ensure_build")
 
 		-- Check if we have a cached target
-		if not force_reselect and ctx.launch_target then
-			M.run_target(ctx.launch_target)
+		if not force_reselect then
+			if not ctx.launch_target then
+				local state = session.load_state()
+				if state.launch_target then
+					ctx.launch_target = state.launch_target
+					M.run_target(ctx.launch_target)
+				end
+			else
+				M.run_target(ctx.launch_target)
+			end
 			return
 		end
 		local targets, terr = fileapi.list_targets(ctx.binary_dir, ctx.configuration)
