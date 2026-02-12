@@ -1,6 +1,7 @@
 return {
 	"stevearc/oil.nvim",
 	dependencies = { "ibhagwan/fzf-lua" },
+	lazy = false,
 	keys = {
 		{
 			"<leader>oo",
