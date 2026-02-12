@@ -68,3 +68,44 @@ end, { noremap = true, silent = true, desc = "Write all buffers and quit Neovim"
 vim.keymap.del("n", "<leader>e")
 vim.keymap.del("n", "<leader>E")
 vim.keymap.del("n", "<leader>fe")
+
+local function open_directory(dir)
+	local open_cmd
+
+	if vim.fn.has("mac") == 1 then
+		open_cmd = { "open", dir }
+	elseif vim.fn.has("win32") == 1 then
+		open_cmd = { "explorer", dir }
+	else
+		open_cmd = { "xdg-open", dir }
+	end
+
+	vim.fn.jobstart(open_cmd, { detach = true })
+end
+vim.keymap.set("n", "<leader>e", function()
+	open_directory(vim.fn.expand("%:p:h"))
+end, { desc = "Open parent directory of current file in explorer" })
+
+vim.keymap.set("n", "<leader>E", function()
+	open_directory(vim.fn.getcwd())
+end, { desc = "Open current working directory in explorer " })
+
+local function fzf_insert_path()
+	require("fzf-lua").files({
+		prompt = "Insert Path> ",
+		actions = {
+			["default"] = function(selected)
+				local paths_to_insert = {}
+				for _, path in ipairs(selected) do
+					local entry = require("fzf-lua").path.entry_to_file(path)
+					local relative_path = vim.fn.fnamemodify(entry.path, ":.")
+
+					table.insert(paths_to_insert, " " .. relative_path)
+				end
+
+				vim.api.nvim_put(paths_to_insert, "c", true, true)
+			end,
+		},
+	})
+end
+vim.keymap.set("n", "<leader>fi", fzf_insert_path, { desc = "FZF: Insert file path(s) at cursor" })

@@ -38,36 +38,21 @@ return {
 		{
 			"<leader>of",
 			function()
-				local oil = require("oil")
-				local fzf = require("fzf-lua")
-
-				fzf.fzf_exec("fd --type d --hidden --follow --exclude .git .", {
-					prompt = "Oil dir> ",
-					cwd = vim.fn.getcwd(),
+				require("fzf-lua").files({
+					cmd = "fd --type d --hidden --follow --exclude .git",
+					prompt = "Open Oil in: ",
 					actions = {
 						["default"] = function(selected)
 							if not selected or not selected[1] then
 								return
 							end
-							-- selected[1] is relative to `cwd` here
-							oil.open_float(vim.fn.fnamemodify(selected[1], ":p"))
+							local entry = require("fzf-lua").path.entry_to_file(selected[1])
+							require("oil").open_float(vim.fn.fnamemodify(entry.path, ":p"))
 						end,
 					},
 				})
 			end,
-			desc = "Open Oil (prompts for dir)",
-		},
-		{
-			"<leader>od",
-			function()
-				local oil = require("oil")
-				local bufname = vim.api.nvim_buf_get_name(0)
-				if bufname == "" then -- If the buffer has no name (e.g. [No Name]), fall back to cwd
-					oil.open_float()
-				end
-				oil.open_float(vim.fn.fnamemodify(bufname, ":p:h"))
-			end,
-			desc = "Open current file's directory in Oil (floating window)",
+			desc = "Open Oil (pretty picker)",
 		},
 	},
 	opts = {
@@ -213,6 +198,7 @@ return {
 			end,
 			-- Window-local options to use for preview window buffers
 			win_options = {},
+			border = "rounded",
 		},
 		-- Configuration for the floating action confirmation window
 		confirmation = {
