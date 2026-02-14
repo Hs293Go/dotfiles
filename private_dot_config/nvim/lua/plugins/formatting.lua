@@ -8,7 +8,7 @@ return {
 			markdown = { "prettier", "injected" },
 			tex = { "latexindent" },
 			fish = {},
-			python = { "ruff", lsp_format = "prefer" },
+			python = { "ruff_format", "ruff_organize_imports", "black" },
 			c = { "clang-format", lsp_format = "prefer" },
 			cpp = { "clang-format", lsp_format = "prefer" },
 			cuda = { "clang-format", lsp_format = "prefer" },
@@ -24,6 +24,7 @@ return {
 			typescriptreact = { "prettier" },
 			html = { "prettier" },
 			sql = { "pg_format" },
+			_ = { "trim_whitespace" },
 		},
 		-- The options you set here will be merged with the builtin formatters.
 		-- You can also define any custom formatters here.

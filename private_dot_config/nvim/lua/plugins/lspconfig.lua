@@ -1,207 +1,125 @@
 return {
-
-	"neovim/nvim-lspconfig", -- LSP configuration
+	"neovim/nvim-lspconfig",
 	dependencies = {
 		{
-			"mrcjkb/rustaceanvim", -- Rust LSP and DAP support
+			"mrcjkb/rustaceanvim",
 			version = "^6",
-			lazy = false,
+			lazy = false, -- Recommended by plugin
 		},
-		"folke/which-key.nvim", -- Keybinding helper
 	},
+	lazy = false, -- Load immediately to ensure LSP servers are ready when opening files
 	config = function()
-		local lspconfig = require("lspconfig")
-		local on_attach = function(client, bufnr)
-			local function make_opts(desc)
-				return { noremap = true, silent = true, buffer = bufnr, desc = desc }
-			end
-
-			-- Other LSP keymaps can be added here
-			vim.keymap.set("n", "gd", vim.lsp.buf.definition, make_opts("LSP go to definition"))
-			local wk = require("which-key")
-			wk.add({
-				{ "gl", group = "LSP: goto" },
-				{
-					"glt",
-					vim.lsp.buf.type_definition,
-					desc = "LSP: Go to type definition",
-					buffer = bufnr,
-					noremap = true,
-				},
-				{ "glr", vim.lsp.buf.references, desc = "LSP: Go to references", buffer = bufnr, noremap = true },
-				{
-					"glD",
-					vim.lsp.buf.implementation,
-					desc = "LSP: Go to implementation",
-					buffer = bufnr,
-					noremap = true,
-				},
-				{
-					"glo",
-					vim.lsp.buf.document_symbol,
-					desc = "LSP: Go to document symbols",
-					buffer = bufnr,
-					noremap = true,
-				},
-				{
-					"glW",
-					vim.lsp.buf.workspace_symbol,
-					desc = "LSP: Go to workspace symbols",
-					buffer = bufnr,
-					noremap = true,
-				},
-			})
-
-			vim.keymap.set("n", "<F2>", vim.lsp.buf.rename, make_opts("Rename variable"))
-			vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, make_opts("Show code actions"))
-			vim.keymap.set("v", "<C-.>", vim.lsp.buf.code_action, make_opts("Show code actions on selection"))
-
-			vim.keymap.set("n", "<leader>cr", vim.lsp.buf.rename, make_opts("LSP: Rename variable"))
-			vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, make_opts("LSP: Show code actions"))
-
-			-- Statusline integration
-			vim.opt.statusline:append("%{luaeval('vim.lsp.status()')}")
-
-			if client.server_capabilities.inlayHintProvider then
-				vim.g.inlay_hints_visible = true
-				vim.lsp.inlay_hint.enable(true)
-			end
-
-			vim.diagnostic.config({ virtual_text = true, signs = true, underline = true })
-		end
-
+		-- 1. Define shared capabilities
 		local capabilities = vim.lsp.protocol.make_client_capabilities()
 		capabilities.textDocument.foldingRange = {
 			dynamicRegistration = false,
 			lineFoldingOnly = true,
 		}
+		-- Required for clangd/utf-16 compatibility
 		capabilities.offsetEncoding = { "utf-16" }
-		lspconfig.clangd.setup({
-			cmd = {
-				"clangd", --
-				"--background-index", -- Enable background indexing
-				"--clang-tidy", -- Enable clang-tidy
-				"--header-insertion=never", -- Disable header insertion
-				"--fallback-style=google", -- Fallback style for formatting
-			},
-			on_attach = function(client, bufnr)
-				-- Keybindings for switchSourceHeader
-				vim.keymap.set(
-					"n",
-					"<A-o>",
-					"<cmd>ClangdSwitchSourceHeader<cr>",
-					{ buffer = bufnr, desc = "Switch source/header" }
-				)
 
-				on_attach(client, bufnr)
+		-- 2. Define our global LSP behavior (the new 'on_attach')
+		vim.api.nvim_create_autocmd("LspAttach", {
+			callback = function(args)
+				local bufnr = args.buf
+				local client = vim.lsp.get_client_by_id(args.data.client_id)
+
+				if not client then
+					return
+				end
+
+				if client.supports_method("textDocument/inlayHint") then
+					-- Disable for texlab specifically as per your original config
+					local should_enable = client.name ~= "texlab"
+					vim.lsp.inlay_hint.enable(should_enable, { bufnr = bufnr })
+				end
+
+				-- Server-specific logic inside LspAttach
+				if client.name == "clangd" then
+					vim.keymap.set(
+						"n",
+						"<A-o>",
+						"<cmd>LspClangdSwitchSourceHeader<cr>",
+						{ buffer = bufnr, desc = "Switch source/header" }
+					)
+				end
+
+				if client.name == "ruff" then
+					client.server_capabilities.hoverProvider = false
+				end
 			end,
+		})
+
+		-- 3. Configure Servers via vim.lsp.enable
+		-- This automatically starts the servers when a matching filetype is opened
+
+		-- Clangd
+		vim.lsp.config("clangd", {
+			cmd = {
+				"clangd",
+				"--background-index",
+				"--clang-tidy",
+				"--header-insertion=never",
+				"--fallback-style=google",
+			},
 			capabilities = capabilities,
 		})
+		vim.lsp.enable("clangd")
 
-		lspconfig.ruff.setup({
-			capabilities = capabilities, -- Your custom capabilities (e.g., for nvim-cmp)
-			on_attach = function(client, bufnr_attached)
-				on_attach(client, bufnr_attached)
-				client.server_capabilities.hoverProvider = false
-				_ = client
-				-- Ruff automatic import organization.
-				LazyVim.format.register({
-					name = "ruff.organize_imports",
-					priority = 50, -- Smaller than Conform's 100.
-					primary = false, -- Conform is primary.
-					format = function(bufnr)
-						if bufnr == bufnr_attached then
-							vim.lsp.buf.code_action({
-								context = {
-									only = { "source.organizeImports" },
-									diagnostics = {},
-								},
-								apply = true,
-							})
-						end
-					end,
-					sources = function(_)
-						return { "ruff.organize_imports" } -- Dummy name.
-					end,
-				})
-			end,
+		-- Python
+		vim.lsp.config("ruff", {
+			capabilities = capabilities,
 		})
+		vim.lsp.enable("ruff")
 
-		lspconfig.basedpyright.setup({ on_attach = on_attach, capabilities = capabilities })
+		vim.lsp.config("ty", { capabilities = capabilities })
+		vim.lsp.enable("ty")
 
-		lspconfig.texlab.setup({
+		-- LaTeX
+		vim.lsp.config("texlab", {
+			capabilities = capabilities,
 			settings = {
 				texlab = {
-					build = {
-						executable = "", -- Disable the build command
-						args = {},
-						forwardSearchAfter = false,
-						onSave = false, -- Prevent texlab from triggering builds
-					},
-					diagnostics = { enabled = true },
-					chktex = {
-						onOpenAndSave = true, -- Run chktex on open and save
-						onEdit = true, -- Run chktex while editing
-					},
+					build = { executable = "", onSave = false },
+					chktex = { onOpenAndSave = true, onEdit = true },
 				},
 			},
-			on_attach = function(c, b)
-				on_attach(c, b)
-				vim.lsp.inlay_hint.enable(false) -- Enable inlay hints
-			end,
 		})
-		lspconfig.cmake.setup({})
+		vim.lsp.enable("texlab")
 
+		-- Lua / TS / CMake
+		vim.lsp.config("lua_ls", {
+			capabilities = capabilities,
+			settings = { Lua = { diagnostics = { globals = { "vim" } }, telemetry = { enable = false } } },
+		})
+		vim.lsp.enable("lua_ls")
+		vim.lsp.config("ts_ls", { capabilities = capabilities })
+		vim.lsp.enable("ts_ls")
+		vim.lsp.config("cmake", { capabilities = capabilities })
+		vim.lsp.enable("cmake")
+
+		-- 4. Rustaceanvim (remains external as it manages its own lifecycle)
 		vim.g.rustaceanvim = {
-			-- Plugin configuration
-			tools = {},
-			-- LSP configuration
 			server = {
-				on_attach = on_attach,
+				capabilities = capabilities,
 				default_settings = {
-					-- rust-analyzer language server configuration
-					["rust-analyzer"] = {
-						cargo = {
-							features = "all",
-						},
-					},
+					["rust-analyzer"] = { cargo = { features = "all" } },
 				},
 			},
-			-- DAP configuration
-			dap = {},
 		}
 
-		lspconfig.lua_ls.setup({
-			on_attach = on_attach,
-			capabilities = capabilities,
-			settings = {
-				Lua = {
-					runtime = {
-						version = "LuaJIT",
-					},
-					diagnostics = {
-						globals = { "vim" },
-					},
-					workspace = {
-						library = vim.api.nvim_get_runtime_file("", true),
-						checkThirdParty = false,
-					},
-					telemetry = {
-						enable = false,
-					},
-				},
-			},
-		})
-		lspconfig.ts_ls.setup({
-			on_attach = on_attach,
-			capabilities = capabilities,
-		})
+		-- Diagnostics UI
+		vim.diagnostic.config({ virtual_text = true, signs = true, underline = true })
 	end,
 	keys = {
-		{
-			"<leader>il",
-			"<cmd>LspInfo<cr>",
-			desc = "Show LSP info",
-		},
+		{ "<leader>il", "<cmd>LspInfo<cr>", desc = "Show LSP info" },
+		{ "<leader>cr", vim.lsp.buf.rename, desc = "LSP: Rename symbol" },
+		{ "<leader>ca", vim.lsp.buf.code_action, desc = "LSP: Code actions", mode = { "n", "v" } },
+		{ "glt", vim.lsp.buf.type_definition, desc = "Type Definition" },
+		{ "glr", vim.lsp.buf.references, desc = "References" },
+		{ "glD", vim.lsp.buf.implementation, desc = "Implementation" },
+		{ "glo", vim.lsp.buf.document_symbol, desc = "Document Symbols" },
+		{ "glW", vim.lsp.buf.workspace_symbol, desc = "Workspace Symbols" },
+		{ "gd", vim.lsp.buf.definition, desc = "LSP go to definition" },
 	},
 }

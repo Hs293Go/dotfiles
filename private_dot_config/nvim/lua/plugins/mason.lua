@@ -25,7 +25,7 @@ return {
 					"texlab",
 					"cmake",
 					"ruff",
-					"basedpyright",
+					"ty",
 					"rust_analyzer",
 					"lua_ls",
 					"ts_ls",
