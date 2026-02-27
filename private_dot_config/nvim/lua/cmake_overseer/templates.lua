@@ -352,6 +352,7 @@ function M.run_target(tgt_name)
 			vim.notify("Binary not found: " .. program, vim.log.levels.ERROR)
 			return
 		end
+		program = vim.fs.abspath(program)
 
 		-- Launch the executable
 		overseer
@@ -376,21 +377,27 @@ function M.launch(force_reselect)
 				if state.launch_target then
 					ctx.launch_target = state.launch_target
 					M.run_target(ctx.launch_target)
+					return
 				end
 			else
 				M.run_target(ctx.launch_target)
+				return
 			end
-			return
 		end
 		local targets, terr = fileapi.list_targets(ctx.binary_dir, ctx.configuration)
 		if not targets then
-			vim.notify(terr, vim.log.levels.WARN)
+			if terr then
+				vim.notify(terr, vim.log.levels.WARN)
+			else
+				vim.notify("No targets found in build index", vim.log.levels.WARN)
+			end
 			return
 		end
 
 		local target_names, target_infos = extract_names_and_infos(targets, function(tgt)
 			return tgt.type == "EXECUTABLE" or tgt.type == "UTILITY"
 		end)
+
 		if #target_names == 0 then
 			vim.notify("No executable targets found among: " .. vim.inspect(targets), vim.log.levels.INFO)
 			return
