@@ -15,6 +15,17 @@ local get_unique_terminal = function()
 end
 local toggle_all = function()
 	local termlist = Term.list()
+	-- Prune claudecode terminal from list
+	local claude_code = require("claudecode.terminal")
+	if claude_code then
+		local claude_bufnr = claude_code.get_active_terminal_bufnr()
+		for i = #termlist, 1, -1 do
+			if termlist[i].buf == claude_bufnr then
+				table.remove(termlist, i)
+			end
+		end
+	end
+
 	if #termlist == 0 then
 		get_unique_terminal()
 		return
