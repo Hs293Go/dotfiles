@@ -7,7 +7,11 @@ function M.get_state_path()
 	if not p then
 		return nil
 	end
-	return vim.fs.joinpath(p.sourceDir, ".cmake_overseer.json")
+	local cache_dir = vim.fs.joinpath(p.sourceDir, ".cache")
+	if not vim.uv.fs_stat(cache_dir) then
+		vim.fn.mkdir(cache_dir, "p")
+	end
+	return vim.fs.joinpath(cache_dir, ".cmake_overseer.json")
 end
 
 function M.save_state(ctx)
