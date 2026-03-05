@@ -34,3 +34,28 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt.conceallevel = 0
 	end,
 })
+
+vim.api.nvim_create_autocmd("Filetype", {
+	pattern = { "snacks_terminal" },
+	callback = function(ev)
+		-- Defer so claudecode.nvim has time to register the terminal
+		vim.defer_fn(function()
+			if not vim.api.nvim_buf_is_valid(ev.buf) then
+				return
+			end
+			local ok, claude_code = pcall(require, "claudecode.terminal")
+			if not ok then
+				return
+			end
+			if ev.buf ~= claude_code.get_active_terminal_bufnr() then
+				return
+			end
+			local warn = function()
+				vim.notify("Do not attempt to use ':' in the terminal buffer.")
+			end
+			-- Block n-mode ; (mapped globally to :) and : directly
+			vim.keymap.set("n", ";", warn, { buffer = ev.buf })
+			vim.keymap.set("n", ":", warn, { buffer = ev.buf })
+		end, 100)
+	end,
+})

@@ -16,8 +16,8 @@ end
 local toggle_all = function()
 	local termlist = Term.list()
 	-- Prune claudecode terminal from list
-	local claude_code = require("claudecode.terminal")
-	if claude_code then
+	local ok, claude_code = pcall(require, "claudecode.terminal")
+	if ok then
 		local claude_bufnr = claude_code.get_active_terminal_bufnr()
 		for i = #termlist, 1, -1 do
 			if termlist[i].buf == claude_bufnr then
