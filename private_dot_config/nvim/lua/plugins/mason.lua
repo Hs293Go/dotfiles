@@ -26,7 +26,6 @@ return {
 					"cmake",
 					"ruff",
 					"ty",
-					"rust_analyzer",
 					"lua_ls",
 					"ts_ls",
 				},
@@ -41,7 +40,6 @@ return {
 					"stylua",
 					"shfmt",
 					"prettier",
-					"rustfmt",
 					{
 						"latexindent",
 						version = "V3.19.1",
