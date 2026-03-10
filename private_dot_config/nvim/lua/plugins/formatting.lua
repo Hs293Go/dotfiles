@@ -14,6 +14,7 @@ return {
 			cuda = { "clang-format", lsp_format = "prefer" },
 			toml = { "taplo" },
 			json = { "prettier" },
+			jsonc = { "prettier" },
 			xml = { "xmllint" },
 			yaml = { "prettier" },
 			rust = { "rustfmt" },
