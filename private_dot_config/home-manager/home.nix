@@ -121,8 +121,6 @@ in {
           fi
         fi
       fi
-
-      unsetopt sharehistory
     '';
     envExtra = ''
       # Bootstrap logic managed by you
