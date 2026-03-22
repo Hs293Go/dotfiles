@@ -74,6 +74,7 @@ in {
 
     tex
 
+    minicom
     htop
     nmap
     kdePackages.okular
