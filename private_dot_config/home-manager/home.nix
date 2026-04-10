@@ -36,6 +36,7 @@ in {
     git
     zip
     unzip
+    rsync
 
     # Build and dev tools: general
     act
@@ -172,6 +173,7 @@ in {
     ".ipython/profile_default/ipython_config.py".source =
       ./dotfiles/ipython/profile_default/ipython_config.py;
     ".config/lazygit/config.yml".source = ./dotfiles/lazygit_config.yml;
+    ".config/just/justfile".source = ./dotfiles/justfile;
     # # Building this configuration will create a copy of 'dotfiles/screenrc' in
     # # the Nix store. Activating the configuration will then make '~/.screenrc' a
     # # symlink to the Nix store copy.
@@ -348,7 +350,7 @@ in {
     dcu = "docker compose up";
     dcud = "docker compose up -d";
     dcd = "docker compose down";
-
+    rcp = "rsync -avzhP --exclude=.git --exclude=build";
   };
 
   # Let Home Manager install and manage itself.
