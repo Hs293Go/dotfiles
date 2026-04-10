@@ -35,6 +35,22 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "python" },
+	callback = function()
+		vim.opt_local.textwidth = 88
+		vim.opt_local.formatoptions:remove({ "t", "c" })
+	end,
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = { "rust" },
+	callback = function()
+		vim.opt_local.textwidth = 100
+		vim.opt_local.formatoptions:remove({ "t", "c" })
+	end,
+})
+
 vim.api.nvim_create_autocmd("Filetype", {
 	pattern = { "snacks_terminal" },
 	callback = function(ev)
