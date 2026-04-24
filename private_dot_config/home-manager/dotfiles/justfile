@@ -6,4 +6,10 @@ colbuild package="" *cmake_flags:
     colcon build --symlink-install \
         --event-handlers=console_cohesion+ \
         {{ if package != "" { "--packages-up-to " + package } else { "" } }} \
-        --cmake-args -GNinja -DCMAKE_EXPORT_COMPILE_COMMANDS=ON {{ cmake_flags }}
+        --cmake-args -GNinja -Wno-deprecated \
+        -DCMAKE_POLICY_DEFAULT_CMP0144=NEW \
+        -DCMAKE_POLICY_DEFAULT_CMP0144=NEW \
+        -DCMAKE_POLICY_DEFAULT_CMP0167=NEW \
+        -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+        -DCMAKE_INSTALL_MESSAGE=LAZY \
+        {{ cmake_flags }}
